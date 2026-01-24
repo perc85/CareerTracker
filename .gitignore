@@ -1,0 +1,48 @@
+# =========================
+# Frontend (React / Node)
+# =========================
+
+# dependencies
+frontend/node_modules/
+frontend/.pnp
+frontend/.pnp.js
+
+# testing
+frontend/coverage/
+
+# production builds
+frontend/build/
+frontend/dist/
+
+# environment files
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.test.local
+frontend/.env.production.local
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# =========================
+# Backend (Flask / Python)
+# =========================
+
+# virtual environment
+backend/venv/
+
+# python cache
+backend/__pycache__/
+backend/**/*.pyc
+
+# environment variables
+backend/.env
+
+# =========================
+# OS / Editor junk
+# =========================
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
