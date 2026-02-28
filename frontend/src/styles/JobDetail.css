@@ -1,0 +1,155 @@
+/* JobDetail.css */
+
+.jobdetail-page {
+  min-height: calc(100vh - 80px);
+  padding: 2rem 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  background: radial-gradient(
+    circle at top,
+    rgba(102, 126, 234, 0.18),
+    rgba(118, 75, 162, 0.10) 45%,
+    rgba(0, 0, 0, 0) 70%
+  );
+}
+
+.jobdetail-card {
+  width: 100%;
+  max-width: 860px;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(102, 126, 234, 0.18);
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+.jobdetail-header {
+  padding: 1.25rem 1.5rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.jobdetail-header h2 {
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: -0.4px;
+}
+
+.jobdetail-subtitle {
+  margin: 0.35rem 0 0;
+  opacity: 0.9;
+  font-size: 0.95rem;
+}
+
+.jobdetail-badges {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.jobdetail-badge {
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  background: rgba(255, 255, 255, 0.14);
+  color: #fff;
+  font-weight: 700;
+  padding: 0.55rem 0.7rem;
+  border-radius: 999px;
+}
+
+/* status accents (subtle) */
+.jobdetail-status-pending { box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.10) inset; }
+.jobdetail-status-interview { box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.12) inset; }
+.jobdetail-status-offer { box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.14) inset; }
+.jobdetail-status-accepted { box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.16) inset; }
+.jobdetail-status-rejected { box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.10) inset; }
+
+.jobdetail-type {
+  opacity: 0.95;
+}
+
+.jobdetail-body {
+  padding: 1.5rem;
+}
+
+.jobdetail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.9rem 1.25rem;
+}
+
+@media (max-width: 640px) {
+  .jobdetail-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.jobdetail-field {
+  background: rgba(102, 126, 234, 0.06);
+  border: 1px solid rgba(102, 126, 234, 0.14);
+  border-radius: 12px;
+  padding: 0.9rem 1rem;
+}
+
+.jobdetail-label {
+  display: block;
+  font-weight: 800;
+  font-size: 0.85rem;
+  color: rgba(17, 24, 39, 0.75);
+  margin-bottom: 0.25rem;
+}
+
+.jobdetail-value {
+  display: block;
+  font-weight: 700;
+  color: rgba(17, 24, 39, 0.95);
+}
+
+.jobdetail-notes {
+  margin-top: 1.25rem;
+  border-radius: 12px;
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  background: rgba(255, 255, 255, 0.9);
+  overflow: hidden;
+}
+
+.jobdetail-notes-header {
+  padding: 0.85rem 1rem;
+  background: rgba(102, 126, 234, 0.08);
+  border-bottom: 1px solid rgba(102, 126, 234, 0.14);
+}
+
+.jobdetail-notes-header h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 800;
+  color: rgba(17, 24, 39, 0.92);
+}
+
+.jobdetail-notes-text {
+  margin: 0;
+  padding: 1rem;
+  color: rgba(17, 24, 39, 0.88);
+  line-height: 1.55;
+}
+
+.jobdetail-actions {
+  margin-top: 1.25rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+.jobdetail-btn {
+  border: none;
+  color: #fff;
+  font-weight: 800;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  box-shadow: 0 10px 18px rgba(102, 126, 234, 0.22);
+}

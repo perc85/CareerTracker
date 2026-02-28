@@ -2,25 +2,14 @@
 # Frontend (React / Node)
 # =========================
 
-# dependencies
 frontend/node_modules/
-frontend/.pnp
-frontend/.pnp.js
-
-# testing
-frontend/coverage/
-
-# production builds
 frontend/build/
 frontend/dist/
+frontend/coverage/
+frontend/.cache/
+frontend/.eslintcache
 
-# environment files
-frontend/.env.local
-frontend/.env.development.local
-frontend/.env.test.local
-frontend/.env.production.local
-
-# logs
+frontend/.env*
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
@@ -29,20 +18,46 @@ yarn-error.log*
 # Backend (Flask / Python)
 # =========================
 
-# virtual environment
+# Virtual environments
+venv/
+.venv/
 backend/venv/
 
-# python cache
-backend/__pycache__/
-backend/**/*.pyc
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
 
-# environment variables
+# Database files (if using SQLite locally)
+*.db
+*.sqlite3
+
+# Python build artifacts
+build/
+dist/
+*.egg-info/
+
+# Backend env
 backend/.env
+
+# =========================
+# Docker
+# =========================
+
+docker-compose.override.yml
 
 # =========================
 # OS / Editor junk
 # =========================
+
 .DS_Store
 Thumbs.db
 .vscode/
 .idea/
+
+# =========================
+# Misc
+# =========================
+
+*.log
