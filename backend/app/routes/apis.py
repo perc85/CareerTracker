@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, request
 from app import db
 from app.models.jobInfo import JobApplication
 from datetime import datetime
+from flask_jwt_extended import jwt_required, get_jwt_identity
 import json
 
 jobs = Blueprint('jobs', __name__, url_prefix='/jobs')
@@ -14,17 +15,22 @@ applications = {
 }
 
 @jobs.route('/get-app-status', methods=['GET'])
+@jwt_required()
 def get_job_status():
     return json.dumps(applications)
 
 @jobs.route('/get-job/<int:job_id>', methods=['GET'])
+@jwt_required()
 def get_job_info(job_id):
-    job_data = JobApplication.query.get(job_id)
+    user_id = int(get_jwt_identity())
+    job_data = JobApplication.query.filter_by(user_id=user_id, id=job_id).first()
     return jsonify([job_data.to_dict()])
 
 @jobs.route('/get-jobs', methods=['GET'])
+@jwt_required()
 def get_jobs():
-    jobs = JobApplication.query.all()
+    user_id = int(get_jwt_identity())
+    jobs = JobApplication.query.filter_by(user_id=user_id).all()
     jobs_list = []
 
     for job in jobs:
@@ -32,7 +38,9 @@ def get_jobs():
     return jsonify(jobs_list)
 
 @jobs.route('/add-job', methods=['POST'])
+@jwt_required()
 def add_job():
+    user_id = int(get_jwt_identity())
     data = request.get_json()
 
     if not data.get('company') or not data.get('title'):
@@ -54,7 +62,8 @@ def add_job():
         status=data['status'],
         salary_range=data['salary_range'] or 'unspecified',
         notes=data['notes'] or 'None',
-        date_applied=date_applied or datetime.utcnow()
+        date_applied=date_applied or datetime.utcnow(),
+        user_id=user_id
     )
 
     db.session.add(job)

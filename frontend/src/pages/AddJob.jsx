@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 export default function AddJob() {
 
     const navigate = useNavigate()
+    const token = localStorage.getItem("access_token")
 
     const [formData, setFormData] = useState({
         company: "",
@@ -30,6 +31,7 @@ export default function AddJob() {
         const response = await fetch('http://127.0.0.1:5000/jobs/add-job', {
             method: "POST",
             headers: {
+                "Authorization": `Bearer ${token}`,
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(formData)

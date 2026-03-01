@@ -13,6 +13,8 @@ class JobApplication(db.Model):
     salary_range = db.Column(db.String(50))
     notes = db.Column(db.Text)
     date_applied = db.Column(db.DateTime, default=datetime.utcnow)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+    user = db.relationship("User", backref="jobs")
 
     def to_dict(self):
         return {
@@ -24,5 +26,6 @@ class JobApplication(db.Model):
             "status": self.status,
             "salary_range": self.salary_range,
             "notes": self.notes,
-            "date_applied": self.date_applied,
+            "date_applied": self.date_applied.isoformat() if self.date_applied else None,
+            "user_id": self.user_id
         }

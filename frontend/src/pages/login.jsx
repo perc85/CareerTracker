@@ -1,7 +1,52 @@
-import React from 'react'
+import { GoogleLogin } from '@react-oauth/google'
+import { useNavigate } from "react-router-dom";
+import '../styles/AuthPage.css'
 
-export default function login() {
+export default function Login() {
+
+  const navigate = useNavigate()
+  const handleGoogleSuccess = async (credentialResponse) => {
+    try{
+      const token = credentialResponse.credential
+      
+      const response = await fetch('http://127.0.0.1:5000/api/auth/google', {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({token})
+      })
+      if(!response.ok){
+        throw new Error("Google login failed")
+      }
+      const data = await response.json()
+      localStorage.setItem("access_token", data.access_token);
+      navigate('/dashboard')
+    }catch(err){
+      console.log(err)
+    }
+  }
+
   return (
-    <div>login</div>
+    <div className="auth-page">
+      <div className="auth-card">
+        <div className="auth-header">
+          <h2>Welcome Back</h2>
+          <p>Sign in to continue tracking your applications</p>
+        </div>
+
+        <div className="auth-body">
+          <div className="auth-provider">
+            <GoogleLogin
+              onSuccess={handleGoogleSuccess}
+              onError={() => console.log("Login Failed")}
+              theme="outline"
+              size="large"
+              shape="pill"
+              text="continue_with"
+              width="320"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
   )
 }
