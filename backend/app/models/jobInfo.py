@@ -12,7 +12,7 @@ class JobApplication(db.Model):
     status = db.Column(db.String(50))
     salary_range = db.Column(db.String(50))
     notes = db.Column(db.Text)
-    date_applied = db.Column(db.DateTime, default=datetime.utcnow)
+    date_applied = db.Column(db.Date)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     user = db.relationship("User", backref="jobs")
 
@@ -26,6 +26,6 @@ class JobApplication(db.Model):
             "status": self.status,
             "salary_range": self.salary_range,
             "notes": self.notes,
-            "date_applied": self.date_applied.isoformat() if self.date_applied else None,
+            "date_applied": self.date_applied,
             "user_id": self.user_id
         }

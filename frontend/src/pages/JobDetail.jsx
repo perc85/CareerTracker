@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import jobDetails from '../api/jobDetail'
 import '../styles/JobDetail.css'
 
 export default function JobDetail() {
 
+    const navigate = useNavigate()
     const { id } = useParams()
     const [job, setJob] = useState([])
     
@@ -65,7 +66,7 @@ export default function JobDetail() {
                     <div className="jobdetail-field">
                     <span className="jobdetail-label">Date Applied</span>
                     <span className="jobdetail-value">
-                        {job.date_applied ? new Date(job.date_applied).toLocaleDateString() : "—"}
+                         {job.date_applied ? job.date_applied : "---"}
                     </span>
                     </div>
 
@@ -91,7 +92,7 @@ export default function JobDetail() {
                     <button className="btn btn-sm jobdetail-btn" type="button">
                     Edit
                     </button>
-                    <button className="btn btn-sm btn-outline" type="button">
+                    <button className="btn btn-sm btn-outline" type="button" onClick={() => navigate('/dashboard')}>
                     Back
                     </button>
                 </div>

@@ -1,2 +1,86 @@
-/* @import "taileindcss" */
+/* ============================= */
+/* Dashboard Main Container */
+/* ============================= */
 
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  padding: 2rem;
+}
+
+
+/* ============================= */
+/* Stats Grid */
+/* ============================= */
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  padding: 2rem;
+}
+
+@media (min-width: 768px) {
+  .stats-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+
+/* ============================= */
+/* Jobs Grid */
+/* ============================= */
+
+.jobs-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  padding: 2rem;
+}
+
+@media (min-width: 768px) {
+  .jobs-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+
+/* ============================= */
+/* Add Job Button Section */
+/* ============================= */
+
+.add-job-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.add-job-button {
+  padding: 0.85rem 2.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #ffffff;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+
+  background: linear-gradient(90deg, #8b5cf6, #6366f1);
+  box-shadow: 0 8px 20px rgba(99, 102, 241, 0.25);
+
+  transition: all 0.3s ease;
+}
+
+.add-job-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 12px 28px rgba(99, 102, 241, 0.35);
+}
+
+.add-job-button:active {
+  transform: scale(0.97);
+}
+
+.add-job-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.3);
+}

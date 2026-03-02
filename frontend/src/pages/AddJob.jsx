@@ -12,7 +12,7 @@ export default function AddJob() {
         title: "",
         location: "",
         job_type: "",
-        status: "",
+        status: "applied",
         salary_range: "",
         notes: "",
         date_applied: ""
@@ -37,8 +37,7 @@ export default function AddJob() {
             body: JSON.stringify(formData)
         })
 
-        const data = await response.json()
-        console.log(data)
+        console.log(formData)
         navigate('/dashboard')
     }
 
@@ -112,7 +111,7 @@ export default function AddJob() {
                     value={formData.status}
                     onChange={handleChange}
                 >
-                    <option value="pending">Applied</option>
+                    <option value="applied" selected>Applied</option>
                     <option value="interview">Interview</option>
                     <option value="offer">Offer</option>
                     <option value="accepted">Accepted</option>

@@ -28,9 +28,11 @@ def create_app():
 
     from app.models import user
     from app.models import jobInfo
-    from app.routes.apis import jobs
+    from app.routes.jobsApi import jobs
+    from app.routes.profileApi import profile
     from app.routes.googleAuth import google_oauth
     app.register_blueprint(jobs)
+    app.register_blueprint(profile)
     app.register_blueprint(google_oauth)
 
     @app.route("/")

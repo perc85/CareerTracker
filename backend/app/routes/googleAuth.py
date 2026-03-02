@@ -28,6 +28,8 @@ def auth_google():
     google_sub = idinfo.get("sub")
     email = idinfo.get("email")
     name = idinfo.get("name")
+    picture = idinfo.get("picture")
+    local_time = data.get("local_time")
 
     if not google_sub or not email:
         return jsonify({"message": "Google token missing required fields"}), 401
@@ -38,7 +40,9 @@ def auth_google():
         user=User(
             google_sub=google_sub,
             email=email,
-            name=name
+            name=name,
+            profile_picture=picture,
+            local_time=local_time
         )
         db.session.add(user)
         db.session.commit()

@@ -10,7 +10,7 @@ export default function JobCard({
   status,
   salary,
   notes
-}) {
+})  {
 
   const navigate = useNavigate()
 

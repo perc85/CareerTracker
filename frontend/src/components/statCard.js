@@ -1,19 +1,26 @@
-import React from 'react'
+import React from "react";
 
-export default function StatCard({title, value, color}) {
+export default function StatCard({ title, value, color }) {
   return (
-    <div className={`card ${color} shadow-lg hover:shadow-xl transition-all duration-300`}>
-        <div className="card-body items-center text-center">
-            
-            <p className="text-md uppercase tracking-wide opacity-70">
-                {title}
-            </p>
+    <div
+      className={[
+        "card",
+        color,
+        "rounded-2xl",
+        "shadow-md hover:shadow-lg",
+        "transition-all duration-300",
+        "min-h-[96px]",
+      ].join(" ")}
+    >
+      <div className="card-body items-center text-center p-4">
+        <p className="text-xs sm:text-sm uppercase tracking-wider opacity-70">
+          {title}
+        </p>
 
-            <h2 className="text-4xl font-bold mt-2">
-                {value}
-            </h2>
-
-        </div>
+        <h2 className="text-2xl sm:text-3xl font-bold leading-none mt-1">
+          {value ?? 0}
+        </h2>
+      </div>
     </div>
-  )
+  );
 }

@@ -1,8 +1,10 @@
 from flask import Blueprint, jsonify, request
 from app import db
 from app.models.jobInfo import JobApplication
-from datetime import datetime
+from app.models.user import User
+from datetime import datetime, timezone, date
 from flask_jwt_extended import jwt_required, get_jwt_identity
+from zoneinfo import ZoneInfo
 import json
 
 jobs = Blueprint('jobs', __name__, url_prefix='/jobs')
@@ -10,7 +12,8 @@ jobs = Blueprint('jobs', __name__, url_prefix='/jobs')
 applications = {
     "Accepted": 10,
     "Rejected": 5,
-    "Pending": 20,
+    "Offer": 20,
+    "Interview": 10,
     "Total": 35
 }
 
@@ -24,7 +27,10 @@ def get_job_status():
 def get_job_info(job_id):
     user_id = int(get_jwt_identity())
     job_data = JobApplication.query.filter_by(user_id=user_id, id=job_id).first()
-    return jsonify([job_data.to_dict()])
+    job_data_dict = job_data.to_dict()
+    job_data_dict['date_applied'] = job_data.date_applied.strftime("%Y-%m-%d")
+
+    return jsonify([job_data_dict])
 
 @jobs.route('/get-jobs', methods=['GET'])
 @jwt_required()
@@ -34,7 +40,9 @@ def get_jobs():
     jobs_list = []
 
     for job in jobs:
-        jobs_list.append(job.to_dict())
+        job_dict = job.to_dict()
+        job_dict['date_applied'] = job.date_applied.strftime("%Y-%m-%d")
+        jobs_list.append(job_dict)
     return jsonify(jobs_list)
 
 @jobs.route('/add-job', methods=['POST'])
@@ -42,18 +50,21 @@ def get_jobs():
 def add_job():
     user_id = int(get_jwt_identity())
     data = request.get_json()
+    timezone_str = db.session.query(User.local_time).filter_by(id=user_id).scalar()
+    tz = ZoneInfo(timezone_str) if timezone_str else timezone.utc
 
     if not data.get('company') or not data.get('title'):
         return jsonify({'error': 'company and title are required'}), 400
-    
-    date_applied = None
 
     if data.get('date_applied'):
         try:
-            date_applied = datetime.fromisoformat(data['date_applied'])
+            date_applied = date.fromisoformat(data['date_applied'])
         except ValueError:
             return jsonify({'error': 'date_applied must be ISO format (YYYY-MM-DD)'}), 400
+    else:
+        date_applied = datetime.now(timezone.utc).astimezone(tz).date()
         
+    print(data)
     job = JobApplication(
         company=data['company'],
         title=data['title'],
@@ -62,7 +73,7 @@ def add_job():
         status=data['status'],
         salary_range=data['salary_range'] or 'unspecified',
         notes=data['notes'] or 'None',
-        date_applied=date_applied or datetime.utcnow(),
+        date_applied=date_applied,
         user_id=user_id
     )
 
@@ -70,3 +81,4 @@ def add_job():
     db.session.commit()
 
     return jsonify(job.to_dict()), 201
+

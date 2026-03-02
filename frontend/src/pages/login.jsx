@@ -5,6 +5,7 @@ import '../styles/AuthPage.css'
 export default function Login() {
 
   const navigate = useNavigate()
+  const local = Intl.DateTimeFormat().resolvedOptions().timeZone
   const handleGoogleSuccess = async (credentialResponse) => {
     try{
       const token = credentialResponse.credential
@@ -12,7 +13,10 @@ export default function Login() {
       const response = await fetch('http://127.0.0.1:5000/api/auth/google', {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({token})
+        body: JSON.stringify({
+          token,
+          "local_time": local
+        })
       })
       if(!response.ok){
         throw new Error("Google login failed")
