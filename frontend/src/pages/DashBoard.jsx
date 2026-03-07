@@ -4,11 +4,13 @@ import { appStatus, jobInformation } from '../api/dashBoard'
 import '../components/jobCard'
 import StatCard from '../components/statCard'
 import JobCard from '../components/jobCard'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 export default function DashBoard() {
 
   const navigate = useNavigate()
+  const cards = useParams()
+  const [cardsToShow, setCardsToShow] = useState('total')
 
   const [applicationData, setApplicationData] = useState({
     'Accepted': 0,
@@ -21,17 +23,17 @@ export default function DashBoard() {
   const [jobInfo, setJobInfo] = useState([])
 
   const statusConfig = [
-    {'key': 'Accepted', 'color': "bg-green-100"},
-    {'key': 'Rejected', 'color': "bg-red-100"},
-    {'key': 'Offer', 'color': "bg-yellow-100"},
-    {'key': 'Interview', 'color': 'bg-green-100'},
-    {'key': 'Total', 'color': "bg-blue-100"}
+    { key: "applied",   color: "bg-blue-200" },
+    { key: "interview", color: "bg-purple-200" },
+    { key: "offer",     color: "bg-amber-200" },
+    { key: "accepted",  color: "bg-green-200" },
+    { key: "rejected",  color: "bg-red-200" },
+    { key: "total",     color: "bg-gray-200" }
   ]
 
   useEffect(() => {
     const fetchApplicationData = async () => {
       const result = await appStatus()
-      console.log(result)
       setApplicationData(result)
     }
 
@@ -42,7 +44,11 @@ export default function DashBoard() {
 
     fetchApplicationData()
     fetchJobInformation()
-  }, []);
+
+    if(Object.keys(cards).length !== 0){
+      setCardsToShow(cards['name'])
+    }
+  }, [cards]);
 
 
 
@@ -50,20 +56,22 @@ export default function DashBoard() {
     <div className="dashboard-container">
 
       <div className="flex justify-center mt-8">
-        <div className="grid grid-cols-5 gap-5 max-w-6xl w-full px-6">
+        <div className="grid grid-cols-6 gap-5 max-w-6xl w-full px-6">
           {statusConfig.map((status) => (
-            <StatCard
-              key={status.key}
-              title={status.key}
-              color={status.color}
-              value={applicationData[status.key]}
-            />
+              <StatCard
+                key={status.key}
+                title={status.key}
+                color={status.color}
+                value={applicationData[status.key]}
+                setCardsToShow={setCardsToShow}
+              />
           ))}
         </div>
       </div>
 
       <div className="jobs-grid">
         {jobInfo.map(jobs => (
+          (cardsToShow.toLowerCase() === 'total' || cardsToShow.toLowerCase()===jobs.status.toLowerCase()) ? (
           <JobCard
             key={jobs.id}
             id={jobs.id}
@@ -76,6 +84,7 @@ export default function DashBoard() {
             salary={jobs.salary_range}
             notes={jobs.notes}
           />
+          ): null
         ))}
       </div>
 

@@ -1,11 +1,12 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import '../styles/AddJob.css'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 export default function AddJob() {
 
     const navigate = useNavigate()
     const token = localStorage.getItem("access_token")
+    const { id } = useParams()
 
     const [formData, setFormData] = useState({
         company: "",
@@ -28,7 +29,7 @@ export default function AddJob() {
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        const response = await fetch('http://127.0.0.1:5000/jobs/add-job', {
+        await fetch('http://127.0.0.1:5000/jobs/add-job', {
             method: "POST",
             headers: {
                 "Authorization": `Bearer ${token}`,
@@ -41,11 +42,28 @@ export default function AddJob() {
         navigate('/dashboard')
     }
 
+    useEffect(() => {
+        if(id){
+            const fetchData = async () => {
+                const response = await fetch(`http://127.0.0.1:5000/jobs/get-job/${id}`, {
+                    method: "GET",
+                    headers: {
+                        "Authorization": `Bearer ${token}`,
+                    }
+                })
+                const data = await response.json()
+                setFormData(data[0])
+                console.log(formData)
+            }
+            fetchData()
+        }
+    },[id, token])
+
   return (
     <div className="addjob-page">
         <div className="addjob-card">
             <div className="addjob-header">
-            <h2>Add a Job</h2>
+            <h2>{id ? "Edit" : "Add a Job"}</h2>
             <p>Track your applications in one place.</p>
             </div>
 
@@ -111,7 +129,7 @@ export default function AddJob() {
                     value={formData.status}
                     onChange={handleChange}
                 >
-                    <option value="applied" selected>Applied</option>
+                    <option value="applied">Applied</option>
                     <option value="interview">Interview</option>
                     <option value="offer">Offer</option>
                     <option value="accepted">Accepted</option>

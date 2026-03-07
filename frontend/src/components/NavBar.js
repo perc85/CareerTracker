@@ -9,7 +9,7 @@ export default function NavBar() {
 
         <div>
             <Link to={'/dashboard'}>DashBoard</Link>
-            <Link to={'/joblist'}>Jobs</Link>
+            <Link to={'/resume'}>Resume</Link>
             <Link to={'/addjob'}>Add a Job</Link>
             <Link to={'/profile'}>Profile</Link>
         </div>

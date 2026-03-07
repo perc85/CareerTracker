@@ -17,7 +17,7 @@
   max-width: 860px;
   background: rgba(255, 255, 255, 0.92);
   border: 1px solid rgba(102, 126, 234, 0.18);
-  border-radius: 16px;
+  border-radius: 20px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
   overflow: hidden;
 }
@@ -54,7 +54,7 @@
 
 .profile-btn {
   border: none;
-  border-radius: 12px;
+  border-radius: 14px;
   padding: 0.7rem 0.95rem;
   color: #fff;
   font-weight: 800;
@@ -87,7 +87,7 @@
   display: flex;
   align-items: center;
   gap: 1.25rem;
-  margin-bottom: 1.25rem;
+  margin-bottom: 1rem;
 }
 
 .profile-avatar-wrap {
@@ -127,6 +127,53 @@
   color: rgba(17, 24, 39, 0.6);
   font-weight: 700;
   font-size: 0.92rem;
+}
+
+/* Stats row */
+.profile-stats {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 0.75rem;
+  margin: 0.75rem 0 0;
+}
+
+.profile-stat {
+  background: rgba(102, 126, 234, 0.06);
+  border: 1px solid rgba(102, 126, 234, 0.14);
+  border-radius: 16px;
+  padding: 0.75rem 0.85rem;
+  text-align: center;
+  min-width: 0;
+}
+
+.profile-stat-label {
+  display: block;
+  font-weight: 900;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(17, 24, 39, 0.65);
+}
+
+.profile-stat-value {
+  display: block;
+  margin-top: 0.25rem;
+  font-weight: 950;
+  font-size: 1.25rem;
+  color: rgba(17, 24, 39, 0.95);
+  line-height: 1.1;
+}
+
+@media (max-width: 900px) {
+  .profile-stats {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 520px) {
+  .profile-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 /* Details grid */
@@ -191,7 +238,8 @@
 }
 
 .mono {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
 }
 
 /* Divider */
@@ -201,7 +249,7 @@
   margin: 1.25rem 0;
 }
 
-/* Action cards */
+/* Action cards (kept, in case you use later) */
 .profile-actions {
   display: grid;
   grid-template-columns: 1fr 1fr;

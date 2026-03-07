@@ -9,18 +9,21 @@ import json
 
 jobs = Blueprint('jobs', __name__, url_prefix='/jobs')
 
-applications = {
-    "Accepted": 10,
-    "Rejected": 5,
-    "Offer": 20,
-    "Interview": 10,
-    "Total": 35
-}
-
 @jobs.route('/get-app-status', methods=['GET'])
 @jwt_required()
 def get_job_status():
-    return json.dumps(applications)
+    statuses = {'total': 0}
+    user_id = int(get_jwt_identity())
+    job_data = JobApplication.query.filter_by(user_id=user_id).all()
+    for job in job_data:
+        job_dict = job.to_dict()
+        if job_dict['status'] not in statuses:
+            statuses[job_dict['status']] = 1
+            statuses['total'] += 1
+        else:
+            statuses[job_dict['status']] += 1
+            statuses['total'] += 1
+    return jsonify(statuses)
 
 @jobs.route('/get-job/<int:job_id>', methods=['GET'])
 @jwt_required()
@@ -64,7 +67,6 @@ def add_job():
     else:
         date_applied = datetime.now(timezone.utc).astimezone(tz).date()
         
-    print(data)
     job = JobApplication(
         company=data['company'],
         title=data['title'],
@@ -81,4 +83,3 @@ def add_job():
     db.session.commit()
 
     return jsonify(job.to_dict()), 201
-

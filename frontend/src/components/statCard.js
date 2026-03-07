@@ -1,6 +1,10 @@
 import React from "react";
 
-export default function StatCard({ title, value, color }) {
+export default function StatCard({ title, value, color, setCardsToShow }) {
+  const handleClick = () => {
+    localStorage.setItem('cardsToShow', title)
+    console.log(localStorage.getItem('cardsToShow'))
+  }
   return (
     <div
       className={[
@@ -12,7 +16,7 @@ export default function StatCard({ title, value, color }) {
         "min-h-[96px]",
       ].join(" ")}
     >
-      <div className="card-body items-center text-center p-4">
+      <div className="card-body items-center text-center p-4 cursor-pointer" onClick={() => setCardsToShow(title)}>
         <p className="text-xs sm:text-sm uppercase tracking-wider opacity-70">
           {title}
         </p>

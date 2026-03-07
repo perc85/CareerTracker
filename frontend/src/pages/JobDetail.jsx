@@ -89,7 +89,7 @@ export default function JobDetail() {
                 </div>
 
                 <div className="jobdetail-actions">
-                    <button className="btn btn-sm jobdetail-btn" type="button">
+                    <button className="btn btn-sm jobdetail-btn" type="button" onClick={() => {navigate(`/addjob/${id}`)}}>
                     Edit
                     </button>
                     <button className="btn btn-sm btn-outline" type="button" onClick={() => navigate('/dashboard')}>
