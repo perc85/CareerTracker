@@ -29,7 +29,7 @@ export default function AddJob() {
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        await fetch('http://127.0.0.1:5000/jobs/add-job', {
+        await fetch(`${process.env.REACT_APP_BACKEND_URL}/jobs/add-job`, {
             method: "POST",
             headers: {
                 "Authorization": `Bearer ${token}`,
@@ -45,7 +45,7 @@ export default function AddJob() {
     useEffect(() => {
         if(id){
             const fetchData = async () => {
-                const response = await fetch(`http://127.0.0.1:5000/jobs/get-job/${id}`, {
+                const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/jobs/get-job/${id}`, {
                     method: "GET",
                     headers: {
                         "Authorization": `Bearer ${token}`,
@@ -53,7 +53,6 @@ export default function AddJob() {
                 })
                 const data = await response.json()
                 setFormData(data[0])
-                console.log(formData)
             }
             fetchData()
         }

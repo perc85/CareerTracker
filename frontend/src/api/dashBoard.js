@@ -1,5 +1,5 @@
 const appStatus = async () => {
-	const url = 'http://127.0.0.1:5000/jobs/get-app-status'
+	const url = `${process.env.REACT_APP_BACKEND_URL}/jobs/get-app-status`
     const token = localStorage.getItem("access_token")
     const response = await fetch(url, {
         method: "GET",
@@ -16,7 +16,7 @@ const appStatus = async () => {
 }
 
 const jobInformation = async () => {
-    const url = 'http://127.0.0.1:5000/jobs/get-jobs'
+    const url = `${process.env.REACT_APP_BACKEND_URL}/jobs/get-jobs`
     const token = localStorage.getItem("access_token")
 
     const response = await fetch(url, {

@@ -1,10 +1,6 @@
 import React from "react";
 
 export default function StatCard({ title, value, color, setCardsToShow }) {
-  const handleClick = () => {
-    localStorage.setItem('cardsToShow', title)
-    console.log(localStorage.getItem('cardsToShow'))
-  }
   return (
     <div
       className={[

@@ -12,7 +12,7 @@ export default function Profile() {
   useEffect(() => {
     const token = localStorage.getItem("access_token")
     const fetchUserInfo = async () => {
-      const response = await fetch('http://127.0.0.1:5000/profile/get-profile-info', {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/profile/get-profile-info`, {
         method: "GET",
         headers: {
           "Authorization": `Bearer ${token}`,
