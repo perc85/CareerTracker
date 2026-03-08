@@ -7,12 +7,15 @@ import NavBar from './components/NavBar';
 import JobDetail from './pages/JobDetail';
 import AddJob from './pages/AddJob'
 import Resume from './pages/Resume'
+import { useLocation } from 'react-router-dom';
 
 
 function App() {
+  const location = useLocation()
+
   return (
     <>
-      <NavBar />
+    {((location.pathname === '/') ? <NavBar/> : <NavBar showNav={true}/>)}
 
       <Routes>
         <Route path='/' element={<Login/>} />
