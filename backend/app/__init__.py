@@ -15,7 +15,7 @@ db = SQLAlchemy()
 def create_app():
     app = Flask(__name__)
 
-    CORS(app, origins=["http://localhost:3000"])
+    CORS(app, origins=[os.environ.get("FRONTEND_URL")])
 
     app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
