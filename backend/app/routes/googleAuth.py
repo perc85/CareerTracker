@@ -54,12 +54,3 @@ def auth_google():
         "user": user.to_dict()
     })
         
-
-
-@google_oauth.route('/me', methods=['GET'])
-def restore_state():
-    print('waiting')
-
-@google_oauth.route('/logout', methods=['POST'])
-def handle_logout():
-    print('waiting')

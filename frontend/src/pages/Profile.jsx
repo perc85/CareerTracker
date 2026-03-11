@@ -9,6 +9,13 @@ export default function Profile() {
 
   const navigate = useNavigate()
 
+  const handleLogout = () => {
+  
+    localStorage.removeItem('access_token')
+    navigate('/', { replace: true })
+    console.log('Logout successful')
+  }
+
   useEffect(() => {
     const token = localStorage.getItem("access_token")
     const fetchUserInfo = async () => {
@@ -39,7 +46,7 @@ export default function Profile() {
             <button className="profile-btn profile-btn-ghost" type="button">
               Edit
             </button>
-            <button className="profile-btn" type="button">
+            <button className="profile-btn" type="button" onClick={handleLogout}>
               Sign out
             </button>
           </div>

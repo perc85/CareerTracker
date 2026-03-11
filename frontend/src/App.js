@@ -7,6 +7,7 @@ import NavBar from './components/NavBar';
 import JobDetail from './pages/JobDetail';
 import AddJob from './pages/AddJob'
 import Resume from './pages/Resume'
+import ProtectedRoute from './components/ProtectedRoute';
 import { useLocation } from 'react-router-dom';
 
 
@@ -19,13 +20,13 @@ function App() {
 
       <Routes>
         <Route path='/' element={<Login/>} />
-        <Route path='/profile' element={<Profile/>}/>
-        <Route path='/dashboard' element={<DashBoard/>}/>
-        <Route path='/dashboard/:name' element={<DashBoard/>}/>
-        <Route path='/jobdetail/:id' element={<JobDetail/>}/>
-        <Route path='/addjob' element={<AddJob/>}/>
-        <Route path='/addjob/:id' element={<AddJob/>}/>
-        <Route path='/resume' element={<Resume/>}/>
+        <Route path='/profile' element={<ProtectedRoute><Profile/></ProtectedRoute>}/>
+        <Route path='/dashboard' element={<ProtectedRoute><DashBoard/></ProtectedRoute>}/>
+        <Route path='/dashboard/:name' element={<ProtectedRoute><DashBoard/></ProtectedRoute>}/>
+        <Route path='/jobdetail/:id' element={<ProtectedRoute><JobDetail/></ProtectedRoute>}/>
+        <Route path='/addjob' element={<ProtectedRoute><AddJob/></ProtectedRoute>}/>
+        <Route path='/addjob/:id' element={<ProtectedRoute><AddJob/></ProtectedRoute>}/>
+        <Route path='/resume' element={<ProtectedRoute><Resume/></ProtectedRoute>}/>
       </Routes>
     </>
   );
