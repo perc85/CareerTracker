@@ -1,5 +1,3 @@
-/* JobDetail.css */
-
 .jobdetail-page {
   min-height: calc(100vh - 80px);
   padding: 2rem 1rem;
@@ -9,7 +7,7 @@
   background: radial-gradient(
     circle at top,
     rgba(102, 126, 234, 0.18),
-    rgba(118, 75, 162, 0.10) 45%,
+    rgba(118, 75, 162, 0.1) 45%,
     rgba(0, 0, 0, 0) 70%
   );
 }
@@ -63,12 +61,21 @@
   border-radius: 999px;
 }
 
-/* status accents (subtle) */
-.jobdetail-status-pending { box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.10) inset; }
-.jobdetail-status-interview { box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.12) inset; }
-.jobdetail-status-offer { box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.14) inset; }
-.jobdetail-status-accepted { box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.16) inset; }
-.jobdetail-status-rejected { box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.10) inset; }
+.jobdetail-status-pending {
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1) inset;
+}
+.jobdetail-status-interview {
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.12) inset;
+}
+.jobdetail-status-offer {
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.14) inset;
+}
+.jobdetail-status-accepted {
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.16) inset;
+}
+.jobdetail-status-rejected {
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1) inset;
+}
 
 .jobdetail-type {
   opacity: 0.95;

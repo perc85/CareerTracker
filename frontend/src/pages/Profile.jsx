@@ -1,38 +1,39 @@
-import React from 'react'
-import '../styles/Profile.css'
-import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import React from "react";
+import "../styles/Profile.css";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Profile() {
+  const [userData, setUserData] = useState([]);
 
-  const [userData, setUserData] = useState([])
-
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleLogout = () => {
-  
-    localStorage.removeItem('access_token')
-    navigate('/', { replace: true })
-    console.log('Logout successful')
-  }
+    localStorage.removeItem("access_token");
+    navigate("/", { replace: true });
+    console.log("Logout successful");
+  };
 
   useEffect(() => {
-    const token = localStorage.getItem("access_token")
+    const token = localStorage.getItem("access_token");
     const fetchUserInfo = async () => {
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/profile/get-profile-info`, {
-        method: "GET",
-        headers: {
-          "Authorization": `Bearer ${token}`,
-          "Content-Type": "application/json"
-        }
-      })
-      const data = await response.json()
-      setUserData(data)
-    }
+      const response = await fetch(
+        `${process.env.REACT_APP_BACKEND_URL}/profile/get-profile-info`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        },
+      );
+      const data = await response.json();
+      setUserData(data);
+    };
 
-    fetchUserInfo()
-  }, [])
-  
+    fetchUserInfo();
+  }, []);
+
   return (
     <main className="profile-page">
       <section className="profile-card" aria-label="User profile">
@@ -46,7 +47,11 @@ export default function Profile() {
             <button className="profile-btn profile-btn-ghost" type="button">
               Edit
             </button>
-            <button className="profile-btn" type="button" onClick={handleLogout}>
+            <button
+              className="profile-btn"
+              type="button"
+              onClick={handleLogout}
+            >
               Sign out
             </button>
           </div>
@@ -89,15 +94,19 @@ export default function Profile() {
               ["Rejected", "rejected"],
               ["Total", "total"],
             ].map(([label, key]) => (
-              <div className="profile-stat cursor-pointer" key={key} onClick={() => navigate(`/dashboard/${label}`)}>
+              <div
+                className="profile-stat cursor-pointer"
+                key={key}
+                onClick={() => navigate(`/dashboard/${label}`)}
+              >
                 <span className="profile-stat-label">{label}</span>
                 <span className="profile-stat-value">
                   {key === "total"
                     ? Object.values(userData?.stats || {}).reduce(
                         (sum, v) => sum + (Number(v) || 0),
-                        0
+                        0,
                       )
-                    : userData?.stats?.[key] ?? 0}
+                    : (userData?.stats?.[key] ?? 0)}
                 </span>
               </div>
             ))}
@@ -109,20 +118,24 @@ export default function Profile() {
           <div className="profile-grid">
             <div className="profile-field">
               <span className="profile-label">Email</span>
-              <span className="profile-value">{userData?.user?.email || "—"}</span>
+              <span className="profile-value">
+                {userData?.user?.email || "—"}
+              </span>
             </div>
 
             <div className="profile-field">
               <span className="profile-label">Name</span>
-              <span className="profile-value">{userData?.user?.name || "—"}</span>
+              <span className="profile-value">
+                {userData?.user?.name || "—"}
+              </span>
             </div>
 
             <div className="profile-field profile-span-2">
-              <h1 className='text-center'>More coming soon!</h1>
+              <h1 className="text-center">More coming soon!</h1>
             </div>
           </div>
         </div>
       </section>
     </main>
-  )
+  );
 }

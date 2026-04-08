@@ -1,33 +1,35 @@
-import { GoogleLogin } from '@react-oauth/google'
+import { GoogleLogin } from "@react-oauth/google";
 import { useNavigate } from "react-router-dom";
-import '../styles/AuthPage.css'
+import "../styles/AuthPage.css";
 
 export default function Login() {
-
-  const navigate = useNavigate()
-  const local = Intl.DateTimeFormat().resolvedOptions().timeZone
+  const navigate = useNavigate();
+  const local = Intl.DateTimeFormat().resolvedOptions().timeZone;
   const handleGoogleSuccess = async (credentialResponse) => {
-    try{
-      const token = credentialResponse.credential
-      
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/auth/google`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          token,
-          "local_time": local
-        })
-      })
-      if(!response.ok){
-        throw new Error("Google login failed")
+    try {
+      const token = credentialResponse.credential;
+
+      const response = await fetch(
+        `${process.env.REACT_APP_BACKEND_URL}/api/auth/google`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            token,
+            local_time: local,
+          }),
+        },
+      );
+      if (!response.ok) {
+        throw new Error("Google login failed");
       }
-      const data = await response.json()
+      const data = await response.json();
       localStorage.setItem("access_token", data.access_token);
-      navigate('/dashboard')
-    }catch(err){
-      console.log(err)
+      navigate("/dashboard");
+    } catch (err) {
+      console.log(err);
     }
-  }
+  };
 
   return (
     <div className="auth-page">
@@ -52,5 +54,5 @@ export default function Login() {
         </div>
       </div>
     </div>
-  )
+  );
 }

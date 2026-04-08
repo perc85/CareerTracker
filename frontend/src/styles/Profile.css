@@ -7,7 +7,7 @@
   background: radial-gradient(
     circle at top,
     rgba(102, 126, 234, 0.18),
-    rgba(118, 75, 162, 0.10) 45%,
+    rgba(118, 75, 162, 0.1) 45%,
     rgba(0, 0, 0, 0) 70%
   );
 }
@@ -61,7 +61,10 @@
   cursor: pointer;
   background: rgba(255, 255, 255, 0.16);
   border: 1px solid rgba(255, 255, 255, 0.38);
-  transition: transform 0.12s ease, filter 0.12s ease, background 0.12s ease;
+  transition:
+    transform 0.12s ease,
+    filter 0.12s ease,
+    background 0.12s ease;
 }
 
 .profile-btn:hover {
@@ -82,7 +85,6 @@
   padding: 1.5rem;
 }
 
-/* Top section */
 .profile-top {
   display: flex;
   align-items: center;
@@ -129,7 +131,6 @@
   font-size: 0.92rem;
 }
 
-/* Stats row */
 .profile-stats {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
@@ -176,7 +177,6 @@
   }
 }
 
-/* Details grid */
 .profile-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -238,18 +238,17 @@
 }
 
 .mono {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-    "Liberation Mono", "Courier New", monospace;
+  font-family:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
 }
 
-/* Divider */
 .profile-divider {
   height: 1px;
   background: rgba(148, 163, 184, 0.35);
   margin: 1.25rem 0;
 }
 
-/* Action cards (kept, in case you use later) */
 .profile-actions {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -270,7 +269,9 @@
   border: 1px solid rgba(148, 163, 184, 0.35);
   background: rgba(255, 255, 255, 0.9);
   cursor: pointer;
-  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  transition:
+    transform 0.12s ease,
+    box-shadow 0.12s ease;
 }
 
 .profile-action-card:hover {

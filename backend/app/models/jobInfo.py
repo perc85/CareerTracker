@@ -15,6 +15,8 @@ class JobApplication(db.Model):
     date_applied = db.Column(db.Date)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     user = db.relationship("User", backref="jobs")
+    resume_id = db.Column(db.Integer, db.ForeignKey("resumes.id"), nullable=True)
+    resume = db.relationship("Resume", backref="applications")
 
     def to_dict(self):
         return {
@@ -27,5 +29,8 @@ class JobApplication(db.Model):
             "salary_range": self.salary_range,
             "notes": self.notes,
             "date_applied": self.date_applied,
-            "user_id": self.user_id
+            "user_id": self.user_id,
+            "resume_id": self.resume_id,
+            "resume_name": self.resume.name if self.resume else None,
+            "resume_file_url": self.resume.file_url if self.resume else None,
         }

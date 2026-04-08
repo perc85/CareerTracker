@@ -35,14 +35,16 @@ nav a {
 }
 
 nav a::after {
-  content: '';
+  content: "";
   position: absolute;
   width: 0;
   height: 2px;
   bottom: -5px;
   left: 50%;
   background-color: #ffffff;
-  transition: width 0.3s ease, left 0.3s ease;
+  transition:
+    width 0.3s ease,
+    left 0.3s ease;
   transform: translateX(-50%);
 }
 
