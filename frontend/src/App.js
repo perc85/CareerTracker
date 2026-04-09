@@ -10,6 +10,7 @@ import Resume from "./pages/Resume";
 import AddResume from "./pages/AddResume";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { useLocation } from "react-router-dom";
+import '@fortawesome/fontawesome-free/css/all.min.css';
 
 function App() {
   const location = useLocation();

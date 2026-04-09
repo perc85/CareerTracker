@@ -4,6 +4,7 @@ import { appStatus, jobInformation } from "../api/dashBoard";
 import StatCard from "../components/statCard";
 import JobCard from "../components/jobCard";
 import { useNavigate, useParams } from "react-router-dom";
+import ConfirmDeleteModal from "../components/ConfirmDeleteModal";
 
 export default function DashBoard() {
   const navigate = useNavigate();
@@ -18,8 +19,9 @@ export default function DashBoard() {
     applied: 0,
     total: 0,
   });
-
   const [jobInfo, setJobInfo] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [selectId, setSelectId] = useState(null);
 
   const statusConfig = [
     { key: "applied", color: "bg-blue-200" },
@@ -55,6 +57,38 @@ export default function DashBoard() {
       cardsToShow.toLowerCase() === job.status.toLowerCase()
     );
   });
+
+  const handleDeleteClick = (id) => {
+    setSelectId(id);
+    setShowModal(true);
+  };
+
+  const handleConfirmDelete = async () => {
+    const token = localStorage.getItem("access_token");
+    const response = await fetch(
+      `${process.env.REACT_APP_BACKEND_URL}/jobs/${selectId}`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+    if (!response.ok) {
+      throw new Error(`response status: ${response.status}`);
+    }
+
+    const jobToDelete = jobInfo.find((job) => job.id == selectId);
+    if (!jobToDelete) {
+      return;
+    }
+    setApplicationData((prev) => ({
+      ...prev,
+      total: prev["total"] - 1,
+      [jobToDelete["status"]]: prev[jobToDelete["status"]] - 1,
+    }));
+    setJobInfo((prev) => prev.filter((job) => job.id !== selectId));
+  };
 
   return (
     <div className="dashboard-page">
@@ -124,6 +158,7 @@ export default function DashBoard() {
                     status={job.status}
                     salary={job.salary_range}
                     notes={job.notes}
+                    onDeleteClick={handleDeleteClick}
                   />
                 ))}
               </div>
@@ -141,6 +176,14 @@ export default function DashBoard() {
           </div>
         </div>
       </div>
+
+      <ConfirmDeleteModal
+        isOpen={showModal}
+        onClose={() => setShowModal(false)}
+        onConfirm={handleConfirmDelete}
+        title="Delete Job"
+        message="Are you sure you want to delete this job application?"
+      />
     </div>
   );
 }

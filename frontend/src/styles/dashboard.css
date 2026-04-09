@@ -215,7 +215,7 @@
 
   .stats-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.85rem;
+    gap: 0.75rem;
   }
 
   .jobs-grid {
@@ -236,15 +236,19 @@
 }
 
 @media (max-width: 420px) {
-  .stats-grid {
-    grid-template-columns: 1fr;
-  }
-
   .dashboard-header h1 {
     font-size: 1.1rem;
   }
 
   .dashboard-header p {
     font-size: 0.85rem;
+  }
+
+  .dashboard-body {
+    padding: 0.85rem;
+  }
+
+  .stats-grid {
+    gap: 0.65rem;
   }
 }

@@ -3,10 +3,34 @@ import { fetchResumes } from "../api/resume";
 import ResumeCard from "../components/resumeCard";
 import { useNavigate } from "react-router-dom";
 import "../styles/Resume.css";
+import ConfirmDeleteModal from "../components/ConfirmDeleteModal";
 
 export default function Resume() {
   const [resumes, setResumes] = useState([]);
   const navigate = useNavigate();
+  const [showModal, setShowModal] = useState(false);
+  const [selectedId, setSelectedId] = useState(null);
+
+  const handleDeleteClick = (id) => {
+    setSelectedId(id);
+    setShowModal(true);
+  };
+  const handleConfirmDelete = async () => {
+    const token = localStorage.getItem("access_token");
+    const response = await fetch(
+      `${process.env.REACT_APP_BACKEND_URL}/resume/${selectedId}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Authorization": `Bearer ${token}`,
+        },
+      },
+    );
+    if (!response.ok) {
+      throw new Error(`response status: ${response.status}`);
+    }
+    setResumes((prev) => prev.filter(prev => prev.id !== selectedId));
+  };
 
   useEffect(() => {
     const fetchAllResumes = async () => {
@@ -38,7 +62,11 @@ export default function Resume() {
           ) : (
             <div className="resume-grid">
               {resumes.map((resume) => (
-                <ResumeCard key={resume.id} resume={resume} />
+                <ResumeCard
+                  key={resume.id}
+                  resume={resume}
+                  onDeleteClick={handleDeleteClick}
+                />
               ))}
             </div>
           )}
@@ -53,6 +81,13 @@ export default function Resume() {
           </div>
         </div>
       </div>
+      <ConfirmDeleteModal
+        isOpen={showModal}
+        onClose={() => setShowModal(false)}
+        onConfirm={handleConfirmDelete}
+        title="Delete Resume"
+        message="Are you sure you want to delete this job resume?"
+      />
     </div>
   );
 }

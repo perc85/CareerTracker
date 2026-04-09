@@ -83,3 +83,12 @@ def add_job():
     db.session.commit()
 
     return jsonify(job.to_dict()), 201
+
+@jobs.route('/<int:job_id>', methods=['DELETE'])
+@jwt_required()
+def delete_job(job_id):
+    user_id = int(get_jwt_identity())
+    job = JobApplication.query.filter_by(user_id=user_id, id=job_id).first()
+    db.session.delete(job)
+    db.session.commit()
+    return jsonify({'message': 'success'})
