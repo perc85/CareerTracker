@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import "../styles/AddJob.css";
 import { useNavigate, useParams } from "react-router-dom";
 
 export default function AddJob() {
@@ -11,7 +10,7 @@ export default function AddJob() {
     company: "",
     title: "",
     location: "",
-    job_type: "",
+    job_type: "full-time",
     status: "applied",
     salary_range: "",
     notes: "",
@@ -61,123 +60,91 @@ export default function AddJob() {
   }, [id, token]);
 
   return (
-    <div className="addjob-page">
-      <div className="addjob-card">
-        <div className="addjob-header">
-          <h2>{id ? "Edit" : "Add a Job"}</h2>
-          <p>Track your applications in one place.</p>
+    <div className="flex justify-center max-h-full pt-28 pb-8 px-4">
+      <div className="w-full max-w-3xl bg-gray-50 rounded-2xl border shadow-lg">
+        <div className=" px-8 py-4 mb-8 text-white bg-gradient-to-r from-indigo-500 to-purple-700 rounded-t-2xl">
+          <h2 className="font-bold text-2xl">
+            Add a Job
+          </h2>
+          <p className="pt-2">
+            Track your applications in one place
+          </p>
         </div>
-
-        <form className="addjob-body" onSubmit={handleSubmit}>
-          <div className="addjob-grid">
-            <div className="addjob-field">
-              <label>Company</label>
-              <input
-                className="addjob-input"
-                type="text"
-                name="company"
-                value={formData.company}
-                onChange={handleChange}
-              />
+        <div>
+          <form onSubmit={handleSubmit}>
+            <div className="grid gap-4 px-6 grid-cols-2 pb-4">
+              <div className="w-full">
+                <label className="font-bold">Company</label>
+                <div className="pt-2">
+                  <input type="text" className="border border-gray-300 w-full rounded-2xl p-3" name="company" value={formData.company} onChange={handleChange}/>
+                </div>
+              </div>
+              <div className="w-full">
+                <label className="font-bold">Title</label>
+                <div className="pt-2">
+                  <input type="text" className="border border-gray-300 w-full rounded-2xl p-3" name="title" value={formData.title} onChange={handleChange}/>
+                </div>
+              </div>
+              <div className="w-full">
+                <label className="font-bold">Location</label>
+                <div className="pt-2">
+                  <input type="text" className="border border-gray-300 w-full rounded-2xl p-3" name="location" value={formData.location} onChange={handleChange}/>
+                </div>
+              </div>
+              <div className="w-full">
+                <label className="font-bold">Job Type</label>
+                <div className="pt-2">
+                  <select className="border border-gray-300 w-full rounded-2xl p-3" name="job-type" value={formData.job_type} onChange={handleChange}>
+                    <option value="#">Full-Time</option>
+                    <option value="#">Part-time</option>
+                    <option value="#">Internship</option>
+                    <option value="#">Contract</option>
+                    <option value="#">Temporary</option>
+                    <option value="#">Remote</option>
+                    <option value="#">Hybrid</option>
+                  </select>
+                </div>
+              </div>
+              <div className="w-full">
+                <label className="font-bold">Status</label>
+                <div className="pt-2">
+                  <select className="border border-gray-300 w-full rounded-2xl p-3" name="status" value={formData.status} onChange={handleChange}>
+                    <option value="#">Applied</option>
+                    <option value="#">Interview</option>
+                    <option value="#">Offer</option>
+                    <option value="#">Accepted</option>
+                    <option value="#">Rejected</option>
+                  </select>
+                </div>
+              </div>
+              <div className="w-full">
+                <label className="font-bold">Salary Range</label>
+                <div className="pt-2">
+                  <input type="text" className="border border-gray-300 w-full rounded-2xl p-3" name="salary_range" value={formData.salary_range} onChange={handleChange}/>
+                </div>
+              </div>
             </div>
-
-            <div className="addjob-field">
-              <label>Title</label>
-              <input
-                className="addjob-input"
-                type="text"
-                name="title"
-                value={formData.title}
-                onChange={handleChange}
-              />
+            <div className="grid">
+              <div className="w-full px-6">
+                <label className="font-bold">Notes</label>
+                <div className="pt-2">
+                  <textarea className="border border-gray-300 w-full rounded-2xl p-3 h-28" name="notes" value={formData.notes} onChange={handleChange}></textarea>
+                </div>
+              </div>
             </div>
-
-            <div className="addjob-field">
-              <label>Location</label>
-              <input
-                className="addjob-input"
-                type="text"
-                name="location"
-                value={formData.location}
-                onChange={handleChange}
-              />
+            <div className="grid gap-4 grid-cols-2 px-6 pt-4">
+              <div className="w-full">
+                <label className="font-bold">Date Applied</label>
+                <div className="pt-2">
+                  <input type="date" className="border border-gray-300 w-full rounded-2xl p-3" name="date_applied" value={formData.date_applied} onChange={handleChange}/>
+                </div>
+              </div>
             </div>
-
-            <div className="addjob-field">
-              <label>Job Type</label>
-              <select
-                className="addjob-select"
-                name="job_type"
-                value={formData.job_type}
-                onChange={handleChange}
-              >
-                <option value="">Select Job Type</option>
-                <option value="full-time">Full-time</option>
-                <option value="part-time">Part-time</option>
-                <option value="internship">Internship</option>
-                <option value="contract">Contract</option>
-                <option value="temporary">Temporary</option>
-                <option value="remote">Remote</option>
-                <option value="hybrid">Hybrid</option>
-              </select>
+            <div className="flex justify-end p-6">
+              <button type="submit" className="border px-6 py-4 rounded-2xl bg-gradient-to-r from-indigo-500 to-purple-700 text-white font-bold hover:-translate-y-1 transition duration-200 ease-in-out">Add Job</button>
             </div>
-
-            <div className="addjob-field">
-              <label>Status</label>
-              <select
-                className="addjob-select"
-                name="status"
-                value={formData.status}
-                onChange={handleChange}
-              >
-                <option value="applied">Applied</option>
-                <option value="interview">Interview</option>
-                <option value="offer">Offer</option>
-                <option value="accepted">Accepted</option>
-                <option value="rejected">Rejected</option>
-              </select>
-            </div>
-
-            <div className="addjob-field">
-              <label>Salary Range</label>
-              <input
-                className="addjob-input"
-                type="text"
-                name="salary_range"
-                value={formData.salary_range}
-                onChange={handleChange}
-              />
-            </div>
-
-            <div className="addjob-field addjob-span-2">
-              <label>Notes</label>
-              <textarea
-                className="addjob-textarea"
-                name="notes"
-                maxLength={400}
-                value={formData.notes}
-                onChange={handleChange}
-              />
-            </div>
-
-            <div className="addjob-field">
-              <label>Date Applied</label>
-              <input
-                className="addjob-input"
-                type="date"
-                name="date_applied"
-                value={formData.date_applied}
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-
-          <div className="addjob-actions">
-            <button className="addjob-btn" type="submit">
-              Add Job
-            </button>
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
     </div>
   );

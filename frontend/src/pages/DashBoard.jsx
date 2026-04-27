@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import "../styles/dashboard.css";
 import { appStatus, jobInformation } from "../api/dashBoard";
 import StatCard from "../components/statCard";
 import JobCard from "../components/jobCard";
@@ -78,7 +77,7 @@ export default function DashBoard() {
       throw new Error(`response status: ${response.status}`);
     }
 
-    const jobToDelete = jobInfo.find((job) => job.id == selectId);
+    const jobToDelete = jobInfo.find((job) => job.id === selectId);
     if (!jobToDelete) {
       return;
     }
@@ -91,92 +90,86 @@ export default function DashBoard() {
   };
 
   return (
-    <div className="dashboard-page">
-      <div className="dashboard-shell">
-        <div className="dashboard-header">
+    <div className="max-h-full px-4 pb-8 pt-28 flex justify-center">
+      <div className="border bg-gray-50 w-full max-w-7xl rounded-2xl shadow-lg">
+        <div className="md:flex justify-between mb-8 px-8 py-4 bg-gradient-to-r from-indigo-500 to-purple-700 text-white rounded-t-2xl">
           <div>
-            <h1>Application Dashboard</h1>
-            <p>
-              Track your application progress and manage your job opportunities
+            <h2 className="font-bold text-2xl">Application Dashboard</h2>
+            <p className="font-semibold pt-4 pb-2 md:pb-0">
+              Track and manage your job search
             </p>
           </div>
-
-          <div className="dashboard-badge">
-            <span>{applicationData.total}</span>
-            <small>Total Applications</small>
+          <div className="border rounded-2xl p-2 text-center bg-white/10">
+            <h2
+              className="font-bold text-2xl"
+            >
+              {applicationData["total"]}
+            </h2>
+            <p>Applications</p>
           </div>
         </div>
-
-        <div className="dashboard-body">
-          <section className="stats-section">
-            <div className="stats-grid">
-              {statusConfig.map((status) => (
-                <StatCard
-                  key={status.key}
-                  title={status.key}
-                  color={status.color}
-                  value={applicationData[status.key]}
-                  setCardsToShow={setCardsToShow}
-                />
-              ))}
-            </div>
-          </section>
-
-          <section className="jobs-section">
-            <div className="section-header">
-              <div>
-                <h2>
-                  {cardsToShow.charAt(0).toUpperCase() + cardsToShow.slice(1)}{" "}
-                  Jobs
-                </h2>
-                <p>
-                  {filteredJobs.length}{" "}
-                  {filteredJobs.length === 1 ? "application" : "applications"}
-                </p>
-              </div>
-            </div>
-
-            {filteredJobs.length === 0 ? (
-              <div className="jobs-empty">
-                <h3>No job applications found</h3>
-                <p>
-                  Try selecting another status or add a new application to get
-                  started.
-                </p>
-              </div>
-            ) : (
-              <div className="jobs-grid">
-                {filteredJobs.map((job) => (
-                  <JobCard
-                    key={job.id}
-                    id={job.id}
-                    name={job.company}
-                    title={job.title}
-                    date={job.date_applied ? job.date_applied : "---"}
-                    type={job.job_type}
-                    location={job.location}
-                    status={job.status}
-                    salary={job.salary_range}
-                    notes={job.notes}
-                    onDeleteClick={handleDeleteClick}
-                  />
-                ))}
-              </div>
-            )}
-          </section>
-
-          <div className="add-job-wrapper">
-            <button
-              name="add-jobs"
-              className="add-job-button"
-              onClick={() => navigate("/addjob")}
-            >
-              + Add More Job Applications
-            </button>
+        <div className="grid grid-cols-2 md:grid-cols-6 gap-4 px-4 md:px-8 pb-6">
+          {statusConfig.map((status) => (
+            <StatCard
+              key={status.key}
+              title={status.key}
+              color={status.color}
+              value={applicationData[status.key]}
+              setCardsToShow={setCardsToShow}
+            />
+          ))}
+        </div>
+        <div className="px-4 md:px-8 pb-6">
+          <h2 className="font-extrabold text-lg">
+            {cardsToShow.charAt(0).toUpperCase() + cardsToShow.slice(1) + " "}{" "}
+            Jobs
+          </h2>
+          <p className="font-light">
+            {filteredJobs.length}{" "}
+            {filteredJobs.length === 1 ? "Application" : "Applications"}
+          </p>
+        </div>
+        {filteredJobs.length > 0 ? (
+          <div
+            className="grid gap-4
+         grid-cols-1 md:grid-cols-2 lg:grid-cols-3 px-4 md:px-8 pb-8"
+          >
+            {filteredJobs.map((job) => (
+              <JobCard
+                key={job.id}
+                id={job.id}
+                name={job.company}
+                title={job.title}
+                date={job.date_applied ? job.date_applied : "---"}
+                type={job.job_type}
+                location={job.location}
+                status={job.status}
+                salary={job.salary_range}
+                notes={job.notes}
+                onDeleteClick={handleDeleteClick}
+              />
+            ))}
           </div>
+        ) : (
+          <div className="flex justify-center">
+            <div className="text-center px-16 py-12 bg-gray-100 w-full mx-8 mb-8 rounded-2xl border border-dashed border-gray-400">
+              <h2 className="font-bold pb-2 text-lg">No job applications found</h2>
+              <p className="font-light">
+                Try selecting another status or add a new application to get
+                started.
+              </p>
+            </div>
+          </div>
+        )}
+        <div className="flex justify-center mb-4">
+          <button
+            className="border px-6 py-4 rounded-2xl bg-gradient-to-r from-indigo-500 to-purple-700 text-white font-bold hover:-translate-y-1 transition duration-200 ease-in-out"
+            onClick={() => navigate("/addjob")}
+          >
+            + Add More Job Applications
+          </button>
         </div>
       </div>
-
       <ConfirmDeleteModal
         isOpen={showModal}
         onClose={() => setShowModal(false)}

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { fetchResumes } from "../api/resume";
 import ResumeCard from "../components/resumeCard";
 import { useNavigate } from "react-router-dom";
-import "../styles/Resume.css";
 import ConfirmDeleteModal from "../components/ConfirmDeleteModal";
 
 export default function Resume() {
@@ -40,45 +39,48 @@ export default function Resume() {
   }, []);
 
   return (
-    <div className="resume-page">
-      <div className="resume-shell">
-        <div className="resume-header">
+    <div className="flex justify-center max-h-full pt-28 pb-8 px-4">
+      <div className=" bg-gray-50 w-full max-w-7xl rounded-2xl border shadow-lg">
+        <div className="md:flex justify-between bg-gradient-to-r from-indigo-500 to-purple-700 rounded-t-2xl text-white py-3 px-8 mb-8">
           <div>
-            <h2>My Resumes</h2>
+            <h2 className="font-bold text-2xl pb-3">My Resumes</h2>
             <p>View and manage the resumes you have uploaded</p>
           </div>
-          <div className="resume-count">
-            <span>{resumes.length}</span>
-            <small>{resumes.length === 1 ? "Resume" : "Resumes"}</small>
+          <div className="pt-2 md:pt-0">
+            <div className="border rounded-2xl p-2 text-center bg-white/10">
+              <h2 className="font-bold text-2xl">{resumes.length}</h2>
+              <p>Resumes</p>
+            </div>
           </div>
         </div>
-
-        <div className="resume-body">
-          {resumes.length === 0 ? (
-            <div className="resume-empty">
-              <h3>No resumes yet</h3>
-              <p>Your uploaded resumes will show up here once you add one.</p>
-            </div>
-          ) : (
-            <div className="resume-grid">
-              {resumes.map((resume) => (
-                <ResumeCard
-                  key={resume.id}
-                  resume={resume}
-                  onDeleteClick={handleDeleteClick}
-                />
-              ))}
-            </div>
-          )}
-
-          <div className="resume-actions">
-            <button
-              className="add-resume-button"
-              onClick={() => navigate("/addresume")}
-            >
-              + Add Resume
-            </button>
+        {resumes.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 justify-center gap-4 justify-items-center px-4 md:px-8 mb-8">
+            {resumes.map((resume) => (
+              <ResumeCard
+                key={resume.id}
+                resume={resume}
+                onDeleteClick={handleDeleteClick}
+              />
+            ))}
           </div>
+          ) : (
+            <div className="flex justify-center">
+              <div className="text-center px-16 py-12 bg-gray-100 w-full mx-8 mb-8 rounded-2xl border border-dashed border-gray-400">
+                <h2 className="font-bold pb-2 text-lg">No resumes yet</h2>
+                <p className="font-light">
+                  Your uploaded resumes will show up here once you add one.
+                </p>
+              </div>
+            </div>
+          )
+        }
+        <div className="flex justify-center mb-6">
+          <button
+            className="border px-6 py-4 rounded-2xl bg-gradient-to-r from-indigo-500 to-purple-700 text-white font-bold hover:-translate-y-1 transition duration-200 ease-in-out"
+            onClick={() => navigate("/addresume")}
+          >
+            + Add Resume
+          </button>
         </div>
       </div>
       <ConfirmDeleteModal
@@ -86,7 +88,7 @@ export default function Resume() {
         onClose={() => setShowModal(false)}
         onConfirm={handleConfirmDelete}
         title="Delete Resume"
-        message="Are you sure you want to delete this job resume?"
+        message = "Are you sure you want to delete this resume?"
       />
     </div>
   );

@@ -1,6 +1,5 @@
 import { GoogleLogin } from "@react-oauth/google";
 import { useNavigate } from "react-router-dom";
-import "../styles/AuthPage.css";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -32,15 +31,15 @@ export default function Login() {
   };
 
   return (
-    <div className="auth-page">
-      <div className="auth-card">
-        <div className="auth-header">
-          <h2>Welcome Back</h2>
+    <div className="flex justify-center pt-28 px-4">
+      <div className="flex flex-col rounded-2xl bg-gray-50 w-full max-w-xl border">
+        <div className="px-6 py-4 text-white bg-gradient-to-r from-indigo-500 to-purple-700 rounded-t-2xl">
+          <h2 className="pb-2 font-bold text-2xl">Welcome Back</h2>
           <p>Sign in to continue tracking your applications</p>
         </div>
 
-        <div className="auth-body">
-          <div className="auth-provider">
+        <div className="flex justify-center bg-white rounded-b-2xl">
+          <div className="px-8 py-8">
             <GoogleLogin
               onSuccess={handleGoogleSuccess}
               onError={() => console.log("Login Failed")}

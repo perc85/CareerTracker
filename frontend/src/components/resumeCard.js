@@ -6,8 +6,8 @@ export default function ResumeCard({ resume, onDeleteClick }) {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    // navigate(`/resumes/${resume.id}`);
-    alert("resume details page will be added soon!");
+    // navigate(`/resume/${resume.id}`);
+    alert("Resume detail page will be added soon!")
   };
 
   return (
