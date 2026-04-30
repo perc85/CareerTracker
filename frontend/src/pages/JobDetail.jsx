@@ -16,17 +16,17 @@ export default function JobDetail() {
     fetchJobData();
   }, [id]);
 
-  if (!job) {
+  if (!job.company) {
     return (
-      <div className="jobdetail-page">
-        <div className="jobdetail-card">
-          <div className="jobdetail-header">
-            <h2>Job Details</h2>
-            <p>Loading…</p>
+      <div className="flex justify-center pt-28 pb-8 max-h-full">
+        <div className="border w-full max-w-4xl rounded-2xl">
+          <div className="bg-gradient-to-r from-indigo-500 to-purple-700 text-white rounded-t-2xl px-8 py-4">
+            <h1 className="font-bold text-3xl">Loading...</h1>
           </div>
-          <div className="jobdetail-body">
-            <div className="skeleton h-6 w-3/4 mb-3"></div>
-            <div className="skeleton h-24 w-full"></div>
+          <div className="py-8 px-6">
+            <div className="w-full h-10 bg-gray-200 rounded-full overflow-hidden">
+              <div className="h-full bg-blue-600 animate-pulse w-full"></div>
+            </div>
           </div>
         </div>
       </div>
@@ -34,82 +34,45 @@ export default function JobDetail() {
   }
 
   return (
-    <div className="jobdetail-page">
-      <div className="jobdetail-card">
-        <div className="jobdetail-header">
-          <div>
-            <h2>{job.title}</h2>
-            <p className="jobdetail-subtitle">
-              {job.company} • {job.location}
-            </p>
+    <div className="flex max-h-full justify-center pt-28 pb-8">
+      <div className="border w-full max-w-4xl rounded-2xl bg-gray-50 shadow-lg">
+        <div className="bg-gradient-to-r from-indigo-500 to-purple-700 text-white rounded-t-2xl px-8 py-4">
+          <h2 className="font-bold text-2xl pb-2">{job.title}</h2>
+          <p>{job.company} • {job.location}</p>
+        </div>
+        <div className="grid gap-4 grid-cols-1 md:grid-cols-2 p-6">
+          <div className="border px-4 py-2 rounded-2xl w-full">
+            <h2 className="font-bold opacity-90 pb-2">Salary Range</h2>
+            <h2 className="font-bold">{job.salary_range}</h2>
           </div>
-
-          <div className="jobdetail-badges">
-            <span
-              className={`badge jobdetail-badge jobdetail-status-${job.status}`}
-            >
-              {job.status}
-            </span>
-            {job.job_type ? (
-              <span className="badge jobdetail-badge jobdetail-type">
-                {job.job_type}
-              </span>
-            ) : null}
+          <div className="border px-4 py-2 rounded-2xl w-full">
+            <h2 className="font-bold opacity-90 pb-2">Date Applied</h2>
+            <h2 className="font-bold">{job.date_applied}</h2>
+          </div>
+          <div className="border px-4 py-2 rounded-2xl w-full">
+            <h2 className="font-bold opacity-90 pb-2">Job ID</h2>
+            <h2 className="font-bold">{job.id}</h2>
+          </div>
+          <div className="border px-4 py-2 rounded-2xl w-full">
+            <h2 className="font-bold opacity-90 pb-2">Location</h2>
+            <h2 className="font-bold">{job.location}</h2>
+          </div>
+          <div className="border rounded-2xl grid-cols-1 md:col-span-2">
+            <div className="border-b py-3 px-4 bg-gray-100 rounded-t-2xl opacity-90">
+              <h2 className="font-bold">Notes</h2>
+            </div>
+            <div className="py-4 px-4">
+              <p>{job.notes}</p>
+            </div>
           </div>
         </div>
-
-        <div className="jobdetail-body">
-          <div className="jobdetail-grid">
-            <div className="jobdetail-field">
-              <span className="jobdetail-label">Salary Range</span>
-              <span className="jobdetail-value">{job.salary_range || "—"}</span>
-            </div>
-
-            <div className="jobdetail-field">
-              <span className="jobdetail-label">Date Applied</span>
-              <span className="jobdetail-value">
-                {job.date_applied ? job.date_applied : "---"}
-              </span>
-            </div>
-
-            <div className="jobdetail-field">
-              <span className="jobdetail-label">Job ID</span>
-              <span className="jobdetail-value">#{job.id}</span>
-            </div>
-
-            <div className="jobdetail-field">
-              <span className="jobdetail-label">Location</span>
-              <span className="jobdetail-value">{job.location || "—"}</span>
-            </div>
-          </div>
-
-          <div className="jobdetail-notes">
-            <div className="jobdetail-notes-header">
-              <h3>Notes</h3>
-            </div>
-            <p className="jobdetail-notes-text">
-              {job.notes || "No notes added."}
-            </p>
-          </div>
-
-          <div className="jobdetail-actions">
-            <button
-              className="btn btn-sm jobdetail-btn"
-              type="button"
-              onClick={() => {
-                navigate(`/addjob/${id}`);
-              }}
-            >
-              Edit
-            </button>
-            <button
-              className="btn btn-sm btn-outline"
-              type="button"
-              onClick={() => navigate("/dashboard")}
-            >
-              Back
-            </button>
-          </div>
+        <div className="flex justify-end px-6 gap-3 pb-6">
+          <button className="border px-4 py-2 rounded-2xl bg-gradient-to-r from-indigo-500 to-purple-700 text-white font-bold hover:-translate-y-1 transition duration-200 ease-in-out" onClick={() => alert("Edit feature will be added soon")}>
+            Edit
+          </button>
+          <button className="border px-4 py-2 rounded-2xl bg-gradient-to-r from-indigo-500 to-purple-700 text-white font-bold hover:-translate-y-1 transition duration-200 ease-in-out" onClick={() => navigate(-1)}>
+            Back
+          </button>
         </div>
       </div>
     </div>
