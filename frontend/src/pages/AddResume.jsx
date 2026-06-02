@@ -60,20 +60,21 @@ export default function AddResume() {
                   value={resumeFormData.category}
                   onChange={handleChange}
                 >
-                  <option value="">General</option>
-                  <option value="">Frontend</option>
-                  <option value="">Backend</option>
-                  <option value="">Full Stack</option>
-                  <option value="">Internship</option>
+                  <option value="">Select category</option>
+                  <option value="general">General</option>
+                  <option value="frontend">Frontend</option>
+                  <option value="backend">Backend</option>
+                  <option value="full-stack">Full Stack</option>
+                  <option value="internship">Internship</option>
                 </select>
               </div>
             </div>
             <div className="grid gap-4 px-8">
               <div className="flex flex-col">
-                <label className="font-bold pb-2">Upload Resume</label>
+                <label className="block font-bold pb-2">Upload Resume</label>
                 <input
                   type="file"
-                  className="file-input file-input-bordered w-full addresume-file"
+                  className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm text-gray-700 shadow-sm file:mr-4 file:rounded-lg file:border-0 file:bg-purple-600 file:px-4 file:py-2 file:font-bold file:text-white hover:file:bg-purple-700"
                   name="selectedFile"
                   accept=".pdf,.doc,.docx"
                   onChange={handleFileChange}
@@ -93,8 +94,8 @@ export default function AddResume() {
               )}
               <div className="flex flex-col">
                 <label className="font-bold pb-2">Notes</label>
-                <textarea 
-                  name="notes" 
+                <textarea
+                  name="notes"
                   value={resumeFormData.notes}
                   placeholder="Optional notes about this resume..."
                   className="border rounded-2xl py-4 px-4"
@@ -103,7 +104,12 @@ export default function AddResume() {
               </div>
             </div>
             <div className="flex justify-end px-8 py-6">
-              <button type="submit" className="border px-6 py-4 rounded-2xl bg-gradient-to-r from-indigo-500 to-purple-700 text-white font-bold hover:-translate-y-1 transition duration-200 ease-in-out">Upload Resume</button>
+              <button
+                type="submit"
+                className="border px-6 py-4 rounded-2xl bg-gradient-to-r from-indigo-500 to-purple-700 text-white font-bold hover:-translate-y-1 transition duration-200 ease-in-out"
+              >
+                Upload Resume
+              </button>
             </div>
           </form>
         </div>

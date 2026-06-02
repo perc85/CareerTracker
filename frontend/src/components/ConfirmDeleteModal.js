@@ -1,5 +1,4 @@
 import React from "react";
-import "../styles/confirmDeleteModal.css";
 
 export default function ConfirmDeleteModal({
   isOpen,
@@ -11,27 +10,13 @@ export default function ConfirmDeleteModal({
   if (!isOpen) return null;
 
   return (
-    <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-card" onClick={(e) => e.stopPropagation()}>
-        <h2 className="modal-title">{title}</h2>
-
-        <p className="modal-message">{message}</p>
-
-        <div className="modal-actions">
-          <button className="modal-btn cancel" onClick={onClose}>
-            Cancel
-          </button>
-
-          <button
-            className="modal-btn delete"
-            onClick={() => {
-              onConfirm();
-              onClose();
-            }}
-          >
-            <i className="fas fa-trash"></i>
-            Delete
-          </button>
+    <div className={`fixed inset-0 flex justify-center items-center transition-colors ${isOpen ? "visible bg-black/20" : "invisible"}`} onClick={onClose}>
+      <div className="bg-white px-4 py-6 rounded-2xl">
+        <h2 className="pb-4 font-bold text-xl">{title}</h2>
+        <p className="pb-4">{message}</p>
+        <div className="flex justify-end gap-4">
+          <button className="shadow p-2 rounded-xl font-semibold hover:bg-gray-100">Cancel</button>
+          <button className="shadow p-2 rounded-xl font-semibold text-white bg-red-500 hover:bg-red-600" onClick={onConfirm}>Delete</button>
         </div>
       </div>
     </div>

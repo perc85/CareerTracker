@@ -10,8 +10,8 @@ export default function AddJob() {
     company: "",
     title: "",
     location: "",
-    job_type: "full-time",
-    status: "applied",
+    job_type: "",
+    status: "",
     salary_range: "",
     notes: "",
     date_applied: "",
@@ -94,14 +94,15 @@ export default function AddJob() {
               <div className="w-full">
                 <label className="font-bold">Job Type</label>
                 <div className="pt-2">
-                  <select className="border border-gray-300 w-full rounded-2xl p-3" name="job-type" value={formData.job_type} onChange={handleChange}>
-                    <option value="#">Full-Time</option>
-                    <option value="#">Part-time</option>
-                    <option value="#">Internship</option>
-                    <option value="#">Contract</option>
-                    <option value="#">Temporary</option>
-                    <option value="#">Remote</option>
-                    <option value="#">Hybrid</option>
+                  <select className="border border-gray-300 w-full rounded-2xl p-3" name="job_type" value={formData.job_type} onChange={handleChange}>
+                    <option value="">Select job type</option>
+                    <option value="full-time">Full-Time</option>
+                    <option value="part-time">Part-time</option>
+                    <option value="internship">Internship</option>
+                    <option value="contract">Contract</option>
+                    <option value="temporary">Temporary</option>
+                    <option value="remote">Remote</option>
+                    <option value="hybrid">Hybrid</option>
                   </select>
                 </div>
               </div>
@@ -109,11 +110,12 @@ export default function AddJob() {
                 <label className="font-bold">Status</label>
                 <div className="pt-2">
                   <select className="border border-gray-300 w-full rounded-2xl p-3" name="status" value={formData.status} onChange={handleChange}>
-                    <option value="#">Applied</option>
-                    <option value="#">Interview</option>
-                    <option value="#">Offer</option>
-                    <option value="#">Accepted</option>
-                    <option value="#">Rejected</option>
+                    <option value="">Select status</option>
+                    <option value="applied">Applied</option>
+                    <option value="interview">Interview</option>
+                    <option value="offer">Offer</option>
+                    <option value="accepted">Accepted</option>
+                    <option value="rejected">Rejected</option>
                   </select>
                 </div>
               </div>

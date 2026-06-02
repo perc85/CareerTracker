@@ -29,6 +29,7 @@ def create_app():
     from app.models import user
     from app.models import jobInfo
     from app.models import resume
+    from app.models import aiUsage
     from app.routes.jobsApi import jobs
     from app.routes.profileApi import profile
     from app.routes.resumeApi import resumes

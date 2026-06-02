@@ -7,7 +7,7 @@ import NavBar from "./components/NavBar";
 import JobDetail from "./pages/JobDetail";
 import AddJob from "./pages/AddJob";
 import Resume from "./pages/Resume";
-// import ResumeDetail from "./pages/ResumeDetail";
+import ResumeDetail from "./pages/ResumeDetail";
 import AddResume from "./pages/AddResume";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { useLocation } from "react-router-dom";
@@ -79,14 +79,14 @@ function App() {
               </ProtectedRoute>
             }
           />
-          {/* <Route
+          <Route
             path="/resume/:id"
             element={
               <ProtectedRoute>
                 <ResumeDetail />
               </ProtectedRoute>
             }
-          /> */}
+          />
           <Route
             path="/addresume"
             element={

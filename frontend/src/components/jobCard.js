@@ -21,14 +21,10 @@ export default function JobCard({
   return (
     <div
       onClick={handleClick}
-      className="card bg-base-100 shadow-lg hover:shadow-xl transition-all duration-300 border border-base-200 cursor-pointer relative group"
+      className="relative group cursor-pointer rounded-2xl border border-gray-200 bg-white shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
     >
       <button
-        className="absolute top-3 right-3 w-8 h-8 flex items-center justify-center
-               rounded-lg bg-white/90 shadow-md
-               text-red-500 hover:bg-red-500 hover:text-white
-               transition-all duration-200 z-10
-               opacity-0 group-hover:opacity-100"
+        className="absolute right-3 top-3 z-10 flex h-8 w-8 items-center justify-center rounded-lg bg-white/90 text-red-500 opacity-0 shadow-md transition-all duration-200 hover:bg-red-500 hover:text-white group-hover:opacity-100"
         onClick={(e) => {
           e.stopPropagation();
           onDeleteClick(id);
@@ -37,37 +33,44 @@ export default function JobCard({
         <i className="fas fa-trash text-sm"></i>
       </button>
 
-      <div className="card-body">
+      <div className="p-6">
         <div>
-          <h2 className="card-title text-lg">{title}</h2>
-          <p className="text-sm opacity-60">{name}</p>
+          <h2 className="text-lg font-bold text-gray-900">{title}</h2>
+          <p className="text-sm text-gray-500">{name}</p>
         </div>
 
-        <div className="flex flex-wrap gap-2 mt-2">
-          <span className="badge badge-outline">{status}</span>
-          <span className="badge badge-outline">{type}</span>
+        <div className="mt-3 flex flex-wrap gap-2">
+          <span className="rounded-full border border-gray-300 px-3 py-1 text-xs font-medium text-gray-700">
+            {status}
+          </span>
+
+          <span className="rounded-full border border-gray-300 px-3 py-1 text-xs font-medium text-gray-700">
+            {type}
+          </span>
         </div>
 
-        <div className="grid grid-cols-2 gap-4 mt-4 text-sm">
+        <div className="mt-5 grid grid-cols-2 gap-4 text-sm">
           <div>
-            <p className="opacity-60">Location</p>
-            <p>{location}</p>
+            <p className="text-gray-500">Location</p>
+            <p className="font-medium text-gray-900">{location}</p>
           </div>
 
           <div>
-            <p className="opacity-60">Salary</p>
-            <p>{salary}</p>
+            <p className="text-gray-500">Salary</p>
+            <p className="font-medium text-gray-900">{salary}</p>
           </div>
 
           <div>
-            <p className="opacity-60">Applied</p>
-            <p>{date}</p>
+            <p className="text-gray-500">Applied</p>
+            <p className="font-medium text-gray-900">{date}</p>
           </div>
         </div>
 
-        <div className="mt-4">
-          <p className="opacity-60 text-sm">Notes</p>
-          <p className="text-sm mt-1 line-clamp-2">{notes}</p>
+        <div className="mt-5">
+          <p className="text-sm text-gray-500">Notes</p>
+          <p className="mt-1 line-clamp-2 text-sm text-gray-800">
+            {notes}
+          </p>
         </div>
       </div>
     </div>

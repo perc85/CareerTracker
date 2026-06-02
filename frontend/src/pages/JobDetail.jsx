@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import jobDetails from "../api/jobDetail";
-import "../styles/JobDetail.css";
 
 export default function JobDetail() {
   const navigate = useNavigate();
