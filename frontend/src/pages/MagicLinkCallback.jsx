@@ -16,7 +16,6 @@ export default function MagicLinkCallback() {
         if (!token) {
           setMessage("Invalid or missing magic link token");
         }
-        console.log(local)
         const response = await fetch(
           `${process.env.REACT_APP_BACKEND_URL}/api/auth/magic-link/auth`,
           {

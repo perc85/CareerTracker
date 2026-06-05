@@ -5,7 +5,9 @@ import { useNavigate } from "react-router-dom";
 export default function Login() {
   const navigate = useNavigate();
   const local = Intl.DateTimeFormat().resolvedOptions().timeZone;
-
+  const [showModal, setShowModal] = useState()
+  const [title, setTitle] = useState()
+  const [message, setMessage] = useState()
   const [email, setEmail] = useState();
 
   const handleGoogleSuccess = async (credentialResponse) => {
@@ -35,16 +37,32 @@ export default function Login() {
   };
 
   const handleMagicLinkLogin = async () => {
-    try{
-      const sendEmail = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/auth/magic-link/send`, {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({
-          user_email: email,
-        })
-      })
-    }catch(e){
-      console.log(e)
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_BACKEND_URL}/api/auth/magic-link/send`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            user_email: email,
+          }),
+        },
+      );
+      if(response.ok){
+        setTitle("Check your email!")
+        setMessage("We sent you a magic link. Click the link in your email to sign in.")
+        setShowModal(true)
+      }
+      else{
+        setTitle("Error sending email!")
+        setMessage("We couldn’t send the magic link. Please check the email you entered and try again.")
+        setShowModal(true)
+      }
+    } catch (e) {
+      console.log(e);
+      setTitle("Error sending email!")
+      setMessage("We couldn’t send the magic link. Please check the email you entered and try again.")
+      setShowModal(true)
     }
   };
 
@@ -85,7 +103,9 @@ export default function Login() {
                 type="email"
                 placeholder="Enter your email"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => {
+                  setEmail(e.target.value)
+                }}
                 className="w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500"
               />
 
@@ -99,6 +119,24 @@ export default function Login() {
           </div>
         </div>
       </div>
+      {showModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+          <div className="bg-white rounded-2xl shadow-xl p-6 w-full max-w-md mx-4">
+            <h2 className="text-xl font-bold mb-2">{title}</h2>
+
+            <p className="text-gray-600 mb-6">
+              {message}
+            </p>
+
+            <button
+              onClick={() => setShowModal(false)}
+              className="w-full py-3 rounded-xl bg-indigo-600 text-white font-semibold hover:bg-indigo-700"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
