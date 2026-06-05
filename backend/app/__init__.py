@@ -34,10 +34,12 @@ def create_app():
     from app.routes.profileApi import profile
     from app.routes.resumeApi import resumes
     from app.routes.googleAuth import google_oauth
+    from app.routes.magicLink import magic_link
     app.register_blueprint(jobs)
     app.register_blueprint(profile)
     app.register_blueprint(resumes)
-    app.register_blueprint(google_oauth)
+    app.register_blueprint(google_oauth, url_prefix="/api/auth")
+    app.register_blueprint(magic_link, url_prefix="/api/auth")
 
     @app.route("/")
     def hello_world():

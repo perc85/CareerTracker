@@ -9,6 +9,7 @@ import AddJob from "./pages/AddJob";
 import Resume from "./pages/Resume";
 import ResumeDetail from "./pages/ResumeDetail";
 import AddResume from "./pages/AddResume";
+import MagicLinkCallback from "./pages/MagicLinkCallback"
 import ProtectedRoute from "./components/ProtectedRoute";
 import { useLocation } from "react-router-dom";
 import "@fortawesome/fontawesome-free/css/all.min.css";
@@ -18,7 +19,7 @@ function App() {
 
   return (
     <div className="h-screen flex flex-col">
-      {location.pathname === "/" ? <NavBar /> : <NavBar showNav={true} />}
+      {location.pathname === "/" || location.pathname === "/auth/magic-link/callback" ? <NavBar /> : <NavBar showNav={true} />}
 
       <main className="flex-1">
         <Routes>
@@ -95,6 +96,7 @@ function App() {
               </ProtectedRoute>
             }
           />
+          <Route path="/auth/magic-link/callback" element={<MagicLinkCallback />} />
         </Routes>
       </main>
     </div>

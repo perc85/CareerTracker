@@ -9,10 +9,10 @@ import os
 
 load_dotenv()
 
-google_oauth = Blueprint('google_oauth', __name__, url_prefix='/api/auth')
+google_oauth = Blueprint('google_oauth', __name__)
 GOOGLE_CLIENT_ID=os.environ.get("GOOGLE_CLIENT_ID")
 
-@google_oauth.route('/google', methods=['POST'])
+@google_oauth.route('/google/login', methods=['POST'])
 def auth_google():
     data = request.get_json()
     token = data.get('token')
@@ -34,9 +34,13 @@ def auth_google():
     if not google_sub or not email:
         return jsonify({"message": "Google token missing required fields"}), 401
     
-    user = User.query.filter_by(google_sub=google_sub).first()
+    user = User.query.filter_by(email=email).first()
 
-    if not user:
+    if user:
+        user.name=name
+        user.google_sub=google_sub
+        user.profile_picture=picture
+    else:
         user=User(
             google_sub=google_sub,
             email=email,
@@ -45,7 +49,7 @@ def auth_google():
             local_time=local_time
         )
         db.session.add(user)
-        db.session.commit()
+    db.session.commit()
 
     access_token = create_access_token(identity=str(user.id))
 
