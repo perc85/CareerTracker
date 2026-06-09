@@ -73,7 +73,6 @@ export async function reviewResume(resume_id, job_description) {
     },
   );
   const data = await response.json();
-  console.log('here')
   if (!response.ok) {
     const error = new Error(data.error || "Failed to review resume");
     error.status = response.status;

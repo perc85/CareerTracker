@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { fetchResume, reviewResume } from "../api/resume";
 import { useParams, useNavigate } from "react-router-dom";
 import Typewriter from "../components/Typewriter";
+import { jsPDF } from "jspdf";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowLeft,
@@ -49,6 +50,55 @@ export default function ResumeDetail() {
     fetchResumeDetails();
   }, [id]);
 
+  const downloadText = () => {
+    if (!aiFeedback?.feedback) return;
+
+    const doc = new jsPDF({
+      orientation: "portrait",
+      unit: "mm",
+      format: "a4",
+    });
+
+    const marginX = 15;
+    const marginY = 18;
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const pageHeight = doc.internal.pageSize.getHeight();
+
+    const usableWidth = pageWidth - marginX * 2;
+    const lineHeight = 7;
+
+    let y = marginY;
+
+    const baseFilename =
+      resumeDetail?.original_filename?.replace(/\.[^/.]+$/, "") || "resume";
+
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(16);
+    doc.text("AI Resume Feedback", marginX, y);
+    y += 10;
+
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(10);
+    doc.text(`Resume: ${resumeDetail.original_filename}`, marginX, y);
+    y += 10;
+
+    doc.setFontSize(11);
+
+    const lines = doc.splitTextToSize(aiFeedback.feedback, usableWidth);
+
+    lines.forEach((line) => {
+      if (y + lineHeight > pageHeight - marginY) {
+        doc.addPage();
+        y = marginY;
+      }
+
+      doc.text(line, marginX, y);
+      y += lineHeight;
+    });
+
+    doc.save(`${baseFilename}_feedback.pdf`);
+  };
+
   const handleReviewModeChange = (mode) => {
     setReviewMode(mode);
     setAiFeedback({ feedback: "" });
@@ -59,7 +109,9 @@ export default function ResumeDetail() {
   const handleGetFeedback = async () => {
     if (reviewMode === "tailored" && jobDescription.trim().length < 50) {
       setShowFeedback(true);
-      setAiError("Please paste a longer job description before requesting tailored feedback.");
+      setAiError(
+        "Please paste a longer job description before requesting tailored feedback.",
+      );
       return;
     }
 
@@ -81,9 +133,11 @@ export default function ResumeDetail() {
       setAiFeedback(aiResponse);
     } catch (err) {
       if (err?.response?.status === 429 || err?.status === 429) {
-        setAiError("You have used all of your AI resume reviews for this month.");
-      }  else {
-        console.log(err)
+        setAiError(
+          "You have used all of your AI resume reviews for this month.",
+        );
+      } else {
+        console.log(err);
         setAiError("Something went wrong while generating feedback.");
       }
     } finally {
@@ -426,6 +480,12 @@ export default function ResumeDetail() {
                     <div className="whitespace-pre-line rounded-xl bg-gray-50 p-4 text-sm leading-7 text-gray-700">
                       <Typewriter text={aiFeedback.feedback} />
                     </div>
+                    <button
+                      onClick={downloadText}
+                      className="mt-5 w-full rounded-xl px-5 py-3 font-bold text-white transition duration-200 bg-gradient-to-r from-indigo-500 to-purple-700 hover:-translate-y-1"
+                    >
+                      Download Feedback
+                    </button>
                   </div>
                 ) : (
                   <div className="px-6 py-5">
