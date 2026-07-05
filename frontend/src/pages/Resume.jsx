@@ -82,6 +82,7 @@ export default function Resume() {
 
           <div className="mt-5 flex flex-col gap-3 sm:flex-row md:mt-0">
             <button
+              type="button"
               className="rounded-xl border border-white/30 bg-white px-5 py-3 font-bold text-purple-700 shadow-sm transition duration-200 hover:-translate-y-1 hover:shadow-md"
               onClick={() => navigate("/addresume")}
             >
@@ -140,60 +141,104 @@ export default function Resume() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-[2fr_0.9fr]">
-          <div className="rounded-2xl border bg-white p-5 shadow-md md:p-6">
-            <div className="mb-5 flex flex-col gap-3 border-b pb-5 md:flex-row md:items-center md:justify-between">
-              <div>
-                <h2 className="text-2xl font-extrabold">Resume Library</h2>
-                <p className="mt-1 text-sm text-gray-500">
-                  Showing {resumes.length}{" "}
-                  {resumes.length === 1 ? "resume" : "resumes"}
-                </p>
-              </div>
-
-              <button
-                className="rounded-xl bg-gradient-to-r from-indigo-500 to-purple-700 px-5 py-3 font-bold text-white shadow-sm transition duration-200 hover:-translate-y-1 hover:shadow-md"
-                onClick={() => navigate("/addresume")}
-              >
-                <FontAwesomeIcon icon={faPlus} className="mr-2" />
-                Add Resume
-              </button>
-            </div>
-
-            {resumes.length > 0 ? (
-              <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3 lg:max-h-[620px] lg:overflow-y-auto lg:pr-2">
-                {resumes.map((resume) => (
-                  <ResumeCard
-                    key={resume.id}
-                    resume={resume}
-                    onDeleteClick={handleDeleteClick}
-                    aiUsage={aiUsage}
-                    reviewLimit={reviewLimit}
-                  />
-                ))}
-              </div>
-            ) : (
-              <div className="rounded-2xl border border-dashed border-gray-300 bg-gray-50 px-6 py-14 text-center">
-                <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-purple-100 text-2xl text-purple-700">
-                  <FontAwesomeIcon icon={faFileLines} />
+        <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-[2fr_0.9fr]">
+          <div className="space-y-6">
+            <div className="rounded-2xl border bg-white p-5 shadow-md md:p-6">
+              <div className="mb-5 flex flex-col gap-3 border-b pb-5 md:flex-row md:items-center md:justify-between">
+                <div>
+                  <h2 className="text-2xl font-extrabold">Resume Library</h2>
+                  <p className="mt-1 text-sm text-gray-500">
+                    Showing {resumes.length}{" "}
+                    {resumes.length === 1 ? "resume" : "resumes"}
+                  </p>
                 </div>
 
-                <h2 className="text-xl font-extrabold">No resumes yet</h2>
-
-                <p className="mx-auto mt-2 max-w-md text-sm text-gray-500">
-                  Upload a resume to start tracking different versions for your
-                  job applications.
-                </p>
-
                 <button
-                  className="mt-6 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-700 px-6 py-3 font-bold text-white shadow-md transition duration-200 hover:-translate-y-1 hover:shadow-lg"
+                  type="button"
+                  className="rounded-xl bg-gradient-to-r from-indigo-500 to-purple-700 px-5 py-3 font-bold text-white shadow-sm transition duration-200 hover:-translate-y-1 hover:shadow-md"
                   onClick={() => navigate("/addresume")}
                 >
                   <FontAwesomeIcon icon={faPlus} className="mr-2" />
                   Add Resume
                 </button>
               </div>
-            )}
+
+              {resumes.length > 0 ? (
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:max-h-[620px] lg:overflow-y-auto lg:pr-2 xl:grid-cols-3">
+                  {resumes.map((resume) => (
+                    <ResumeCard
+                      key={resume.id}
+                      resume={resume}
+                      onDeleteClick={handleDeleteClick}
+                      aiUsage={aiUsage}
+                      reviewLimit={reviewLimit}
+                    />
+                  ))}
+                </div>
+              ) : (
+                <div className="rounded-2xl border border-dashed border-gray-300 bg-gray-50 px-6 py-14 text-center">
+                  <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-purple-100 text-2xl text-purple-700">
+                    <FontAwesomeIcon icon={faFileLines} />
+                  </div>
+
+                  <h2 className="text-xl font-extrabold">No resumes yet</h2>
+
+                  <p className="mx-auto mt-2 max-w-md text-sm text-gray-500">
+                    Upload a resume to start tracking different versions for
+                    your job applications.
+                  </p>
+
+                  <button
+                    type="button"
+                    className="mt-6 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-700 px-6 py-3 font-bold text-white shadow-md transition duration-200 hover:-translate-y-1 hover:shadow-lg"
+                    onClick={() => navigate("/addresume")}
+                  >
+                    <FontAwesomeIcon icon={faPlus} className="mr-2" />
+                    Add Resume
+                  </button>
+                </div>
+              )}
+            </div>
+
+            <div className="rounded-2xl border bg-white p-6 shadow-md">
+              <h3 className="text-xl font-extrabold">Quick Actions</h3>
+
+              <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
+                <button
+                  type="button"
+                  className="rounded-xl bg-gradient-to-r from-indigo-500 to-purple-700 px-5 py-3 font-bold text-white transition duration-200 hover:-translate-y-1 hover:shadow-md"
+                  onClick={() => navigate("/addresume")}
+                >
+                  <FontAwesomeIcon icon={faUpload} className="mr-2" />
+                  Upload Resume
+                </button>
+
+                <button
+                  type="button"
+                  className="rounded-xl border border-gray-200 bg-gray-50 px-5 py-3 font-bold text-gray-700 transition duration-200 hover:bg-gray-100"
+                  onClick={() => navigate("/addjob")}
+                >
+                  <FontAwesomeIcon icon={faPlus} className="mr-2" />
+                  Add Job
+                </button>
+              </div>
+            </div>
+
+            <div className="rounded-2xl border bg-white p-6 shadow-md">
+              <div className="flex items-center gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-amber-100 text-amber-700">
+                  <FontAwesomeIcon icon={faLightbulb} />
+                </div>
+
+                <h3 className="text-xl font-extrabold">Resume Tip</h3>
+              </div>
+
+              <p className="mt-3 text-sm leading-6 text-gray-600">
+                Try naming resumes based on the company or role you are
+                targeting. That makes it easier to remember which version you
+                used for each application.
+              </p>
+            </div>
           </div>
 
           <div className="space-y-6">
@@ -219,9 +264,9 @@ export default function Resume() {
 
                 <div className="h-3 overflow-hidden rounded-full bg-gray-200">
                   <div
-                    className="h-full rounded-full bg-gradient-to-r from-indigo-500 to-purple-700"
+                    className="h-full rounded-full bg-gradient-to-r from-indigo-500 to-purple-700 transition-all duration-300"
                     style={{ width: `${usagePercent}%` }}
-                  ></div>
+                  />
                 </div>
               </div>
 
@@ -280,46 +325,6 @@ export default function Resume() {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-
-        <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
-          <div className="rounded-2xl border bg-white p-6 shadow-md">
-            <h3 className="text-xl font-extrabold">Quick Actions</h3>
-
-            <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
-              <button
-                className="rounded-xl bg-gradient-to-r from-indigo-500 to-purple-700 px-5 py-3 font-bold text-white transition duration-200 hover:-translate-y-1"
-                onClick={() => navigate("/addresume")}
-              >
-                <FontAwesomeIcon icon={faUpload} className="mr-2" />
-                Upload Resume
-              </button>
-
-              <button
-                className="rounded-xl border border-gray-200 bg-gray-50 px-5 py-3 font-bold text-gray-700 transition duration-200 hover:bg-gray-100"
-                onClick={() => navigate("/addjob")}
-              >
-                <FontAwesomeIcon icon={faPlus} className="mr-2" />
-                Add Job
-              </button>
-            </div>
-          </div>
-
-          <div className="rounded-2xl border bg-white p-6 shadow-md">
-            <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-amber-100 text-amber-700">
-                <FontAwesomeIcon icon={faLightbulb} />
-              </div>
-
-              <h3 className="text-xl font-extrabold">Resume Tip</h3>
-            </div>
-
-            <p className="mt-3 text-sm leading-6 text-gray-600">
-              Try naming resumes based on the company or role you are targeting.
-              That makes it easier to remember which version you used for each
-              application.
-            </p>
           </div>
         </div>
       </div>
