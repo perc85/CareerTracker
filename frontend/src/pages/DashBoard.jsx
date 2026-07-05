@@ -309,14 +309,14 @@ export default function DashBoard() {
               <div className="mt-5 grid grid-cols-2 gap-3">
                 <div className="rounded-xl bg-blue-50 p-4">
                   <p className="text-2xl font-extrabold text-blue-700">
-                    {applicationData.applied}
+                    {applicationData.applied ? applicationData.applied : 0}
                   </p>
                   <p className="text-sm font-semibold text-gray-600">Applied</p>
                 </div>
 
                 <div className="rounded-xl bg-purple-50 p-4">
                   <p className="text-2xl font-extrabold text-purple-700">
-                    {applicationData.interview}
+                    {applicationData.interview ? applicationData.interview : 0}
                   </p>
                   <p className="text-sm font-semibold text-gray-600">
                     Interviews
@@ -325,14 +325,14 @@ export default function DashBoard() {
 
                 <div className="rounded-xl bg-amber-50 p-4">
                   <p className="text-2xl font-extrabold text-amber-700">
-                    {applicationData.offer}
+                    {applicationData.offer ? applicationData.offer : 0}
                   </p>
                   <p className="text-sm font-semibold text-gray-600">Offers</p>
                 </div>
 
                 <div className="rounded-xl bg-green-50 p-4">
                   <p className="text-2xl font-extrabold text-green-700">
-                    {applicationData.accepted}
+                    {applicationData.accepted ? applicationData.accepted : 0}
                   </p>
                   <p className="text-sm font-semibold text-gray-600">
                     Accepted
