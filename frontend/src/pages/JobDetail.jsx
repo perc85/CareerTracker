@@ -49,8 +49,8 @@ export default function JobDetail() {
             <h2 className="font-bold">{job.date_applied}</h2>
           </div>
           <div className="border px-4 py-2 rounded-2xl w-full">
-            <h2 className="font-bold opacity-90 pb-2">Job ID</h2>
-            <h2 className="font-bold">{job.id}</h2>
+            <h2 className="font-bold opacity-90 pb-2">Job Type</h2>
+            <h2 className="font-bold">{job.job_type}</h2>
           </div>
           <div className="border px-4 py-2 rounded-2xl w-full">
             <h2 className="font-bold opacity-90 pb-2">Location</h2>
