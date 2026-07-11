@@ -1,14 +1,15 @@
 import { GoogleLogin } from "@react-oauth/google";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, Link } from "react-router-dom";
 
 export default function Login() {
   const navigate = useNavigate();
   const local = Intl.DateTimeFormat().resolvedOptions().timeZone;
-  const [showModal, setShowModal] = useState()
-  const [title, setTitle] = useState()
-  const [message, setMessage] = useState()
+  const [showModal, setShowModal] = useState();
+  const [title, setTitle] = useState();
+  const [message, setMessage] = useState();
   const [email, setEmail] = useState();
+  const location = useLocation();
 
   const handleGoogleSuccess = async (credentialResponse) => {
     try {
@@ -48,21 +49,26 @@ export default function Login() {
           }),
         },
       );
-      if(response.ok){
-        setTitle("Check your email!")
-        setMessage("We sent you a magic link. Click the link in your email to sign in.")
-        setShowModal(true)
-      }
-      else{
-        setTitle("Error sending email!")
-        setMessage("We couldn’t send the magic link. Please check the email you entered and try again.")
-        setShowModal(true)
+      if (response.ok) {
+        setTitle("Check your email!");
+        setMessage(
+          "We sent you a magic link. Click the link in your email to sign in.",
+        );
+        setShowModal(true);
+      } else {
+        setTitle("Error sending email!");
+        setMessage(
+          "We couldn’t send the magic link. Please check the email you entered and try again.",
+        );
+        setShowModal(true);
       }
     } catch (e) {
       console.log(e);
-      setTitle("Error sending email!")
-      setMessage("We couldn’t send the magic link. Please check the email you entered and try again.")
-      setShowModal(true)
+      setTitle("Error sending email!");
+      setMessage(
+        "We couldn’t send the magic link. Please check the email you entered and try again.",
+      );
+      setShowModal(true);
     }
   };
 
@@ -70,12 +76,21 @@ export default function Login() {
     <div className="flex justify-center pt-28 px-4">
       <div className="flex flex-col rounded-2xl bg-gray-50 w-full max-w-xl border">
         <div className="px-6 py-4 text-white bg-gradient-to-r from-indigo-500 to-purple-700 rounded-t-2xl">
-          <h2 className="pb-2 font-bold text-2xl">Welcome Back</h2>
-          <p>Sign in to continue tracking your applications</p>
+          {location.pathname === "/login" ? (
+            <>
+              <h2 className="pb-2 font-bold text-2xl">Welcome Back</h2>
+              <p>Sign in to continue tracking your applications</p>
+            </>
+          ) : (
+            <>
+              <h2 className="pb-2 font-bold text-2xl">Create Your Account</h2>
+              <p>Sign up to continue tracking your applications</p>
+            </>
+          )}
         </div>
 
         <div className="flex justify-center bg-white rounded-b-2xl">
-          <div className="px-8 py-8 w-full max-w-sm">
+          <div className="px-8 pt-8 pb-4 w-full max-w-sm">
             <div className="flex justify-center">
               <GoogleLogin
                 onSuccess={handleGoogleSuccess}
@@ -95,16 +110,22 @@ export default function Login() {
             </div>
 
             <div className="space-y-3">
-              <p className="text-center text-sm text-gray-600">
-                Login with Magic Link
-              </p>
+              {location.pathname === "/login" ? (
+                <p className="text-center text-sm text-gray-600">
+                  Login with Magic Link
+                </p>
+              ) : (
+                <p className="text-center text-sm text-gray-600">
+                  Sign up with Magic Link
+                </p>
+              )}
 
               <input
                 type="email"
                 placeholder="Enter your email"
                 value={email}
                 onChange={(e) => {
-                  setEmail(e.target.value)
+                  setEmail(e.target.value);
                 }}
                 className="w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500"
               />
@@ -118,15 +139,38 @@ export default function Login() {
             </div>
           </div>
         </div>
+        {location.pathname === "/login" ? (
+          <div className="mt-2 mb-6 text-center">
+            <p className="text-sm text-gray-600">
+              Don't have an account?{" "}
+              <Link
+                to="/signup"
+                className="font-semibold text-indigo-600 hover:text-indigo-800 hover:underline"
+              >
+                Sign Up
+              </Link>
+            </p>
+          </div>
+        ) : (
+          <div className="mt-2 mb-6 text-center">
+            <p className="text-sm text-gray-600">
+              Already have an account?{" "}
+              <Link
+                to="/login"
+                className="font-semibold text-indigo-600 hover:text-indigo-800 hover:underline"
+              >
+                Log In
+              </Link>
+            </p>
+          </div>
+        )}
       </div>
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
           <div className="bg-white rounded-2xl shadow-xl p-6 w-full max-w-md mx-4">
             <h2 className="text-xl font-bold mb-2">{title}</h2>
 
-            <p className="text-gray-600 mb-6">
-              {message}
-            </p>
+            <p className="text-gray-600 mb-6">{message}</p>
 
             <button
               onClick={() => setShowModal(false)}

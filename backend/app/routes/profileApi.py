@@ -23,3 +23,8 @@ def get_profile_info():
     
 
     return jsonify({"user": user_info.to_dict(), "stats": statuses})
+
+@profile.route('/verify-token', methods=['GET'])
+@jwt_required()
+def verify_token():
+    return {'success': 'verified'}

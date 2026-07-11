@@ -1,6 +1,7 @@
 import "./App.css";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import Login from "./pages/Login";
+import Homepage from "./pages/HomePage";
 import Profile from "./pages/Profile";
 import DashBoard from "./pages/DashBoard";
 import NavBar from "./components/NavBar";
@@ -9,21 +10,36 @@ import AddJob from "./pages/AddJob";
 import Resume from "./pages/Resume";
 import ResumeDetail from "./pages/ResumeDetail";
 import AddResume from "./pages/AddResume";
-import MagicLinkCallback from "./pages/MagicLinkCallback"
+import MagicLinkCallback from "./pages/MagicLinkCallback";
 import ProtectedRoute from "./components/ProtectedRoute";
-import { useLocation } from "react-router-dom";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
 function App() {
   const location = useLocation();
 
+  let navType = "regular";
+
+  if (
+    location.pathname === "/login" ||
+    location.pathname === "/signup" ||
+    location.pathname === "/auth/magic-link/callback"
+  ) {
+    navType = "none";
+  } else if (location.pathname === "/") {
+    navType = "homepage";
+  }
+
   return (
     <div className="h-screen flex flex-col">
-      {location.pathname === "/" || location.pathname === "/auth/magic-link/callback" ? <NavBar /> : <NavBar showNav={true} />}
+      <NavBar navType={navType} />
 
       <main className="flex-1">
         <Routes>
-          <Route path="/" element={<Login />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Login/>}/>
+
+          <Route path="/" element={<Homepage />} />
+
           <Route
             path="/profile"
             element={
@@ -32,6 +48,7 @@ function App() {
               </ProtectedRoute>
             }
           />
+
           <Route
             path="/dashboard"
             element={
@@ -40,6 +57,7 @@ function App() {
               </ProtectedRoute>
             }
           />
+
           <Route
             path="/dashboard/:name"
             element={
@@ -48,6 +66,7 @@ function App() {
               </ProtectedRoute>
             }
           />
+
           <Route
             path="/jobdetail/:id"
             element={
@@ -56,6 +75,7 @@ function App() {
               </ProtectedRoute>
             }
           />
+
           <Route
             path="/addjob"
             element={
@@ -64,6 +84,7 @@ function App() {
               </ProtectedRoute>
             }
           />
+
           <Route
             path="/addjob/:id"
             element={
@@ -72,6 +93,7 @@ function App() {
               </ProtectedRoute>
             }
           />
+
           <Route
             path="/resume"
             element={
@@ -80,6 +102,7 @@ function App() {
               </ProtectedRoute>
             }
           />
+
           <Route
             path="/resume/:id"
             element={
@@ -88,6 +111,7 @@ function App() {
               </ProtectedRoute>
             }
           />
+
           <Route
             path="/addresume"
             element={
@@ -96,7 +120,11 @@ function App() {
               </ProtectedRoute>
             }
           />
-          <Route path="/auth/magic-link/callback" element={<MagicLinkCallback />} />
+
+          <Route
+            path="/auth/magic-link/callback"
+            element={<MagicLinkCallback />}
+          />
         </Routes>
       </main>
     </div>
